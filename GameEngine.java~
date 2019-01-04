@@ -1,0 +1,528 @@
+import java.util.HashMap;
+import java.util.Stack;
+import java.net.URL;
+import java.util.Scanner;
+import java.io.IOException;
+import java.lang.NullPointerException;
+
+//import java.io.FileReader;
+//import java.io.FileNotFoundException;
+
+
+/**
+ * La classe gérant le jeu.
+ */
+public class GameEngine
+{
+    private Parser aParser;
+    private UserInterface aGui;
+    private HashMap<String, Room> aRooms;
+    private Player aPlayer;
+    
+    /**
+     * Constructeur de la classe
+     */
+    public GameEngine()
+    {
+        this.aParser = new Parser();
+	this.aRooms  = new HashMap<String, Room>();
+	this.aPlayer = new Player("Anon");
+        createRooms();
+    }
+    /**
+     * Initie aGui
+     * @param userInterface: l'interface du jeu
+     */
+    public void setGUI(final UserInterface userInterface)
+    {
+        this.aGui = userInterface;
+        this.printWelcome();
+    }
+
+    
+    /**
+     * Procedure affichant la description de la piece et les sorties.
+     */
+    private void printLocationInfos()
+    {
+	this.aGui.println ( this.aPlayer.getLocation().getLongDescription() );
+    } //printLocationInfos()
+
+    /**
+     * Print out the opening message for the player.
+     */
+    private void printWelcome()
+    {
+        this.aGui.println ( "Welcome to “Within the Woods”" );
+        this.aGui.println ( "Type 'help' if you want help (you won't get any)." );
+	this.printLocationInfos();
+        this.aGui.showImage(aPlayer.getLocation().getImageName());
+    }
+    
+
+    /**
+     * Procedure creant les pieces et les reliant entre elles.
+     */
+    private void createRooms ()
+    {
+	String vFolder = "Ressources/Images";
+	String vFormat = "png";
+
+	String vImgForest    = vFolder+"/"+"dryads_res"+"."+vFormat;
+	
+	String vImgDryads  = vFolder+"/"+"dryads_res"+"."+vFormat;
+	String vImgNaiads  = vFolder+"/"+"naiads_res"+"."+vFormat;
+	String vImgFaun    = vFolder+"/"+"faun_res"+"."+vFormat;
+	String vImgFlowers = vFolder+"/"+"flowers_res"+"."+vFormat;
+	String vImgCave    = vFolder+"/"+"sanctuary_res"+"."+vFormat;
+	String vImgShrooms = vFolder+"/"+"shrooms_res"+"."+vFormat;
+	String vImgSquirel = vFolder+"/"+"squirel_res"+"."+vFormat;
+	String vImgWitch   = vFolder+"/"+"witch_res"+"."+vFormat;
+
+
+	
+	Room vForest  = new Room ("lost in the forest.", vImgForest);
+	Room vForest1 = new Room ("lost in the forest.", vImgForest);
+	Room vForest2 = new Room ("lost in the forest.", vImgForest);
+	Room vForest3 = new Room ("lost in the forest.", vImgForest);
+	Room vWitch   = new Room ("at the wicked witch's house.", vImgWitch);
+	Room vNaiads  = new Room ("in a warm, enlighted and clean cave with some kinds of clear ponds.", vImgNaiads);
+	Room vDryads  = new Room ("in a dense and dark part of the forest.", vImgDryads);
+	Room vCave    = new Room ("surrounded by calm darknesses.\nThe water is clean and warm and the walls are veined by a phosphorescent mineral.\nYou feel comfortable.", vImgCave);
+	Room vFaun    = new Room ("near a convenient house-shaped tree.", vImgFaun);
+	Room vShrooms = new Room ("surrounded by mushrooms. They are absolutly everywhere.", vImgShrooms);
+	Room vSquirel = new Room ("at some big tree with an hole in it.", vImgSquirel);
+	Room vFlower  = new Room ("in a warm and windy glade, covered by nice and odorant flowers of all sort.", vImgFlowers);
+
+
+	aRooms.put ( "forest" , vForest  );
+	aRooms.put ( "forest1", vForest1 );
+	aRooms.put ( "forest2", vForest2 );
+	aRooms.put ( "forest3", vForest3 );
+	aRooms.put ( "witch"  , vWitch   );
+ 	aRooms.put ( "naiads" , vNaiads  );
+ 	aRooms.put ( "dryads" , vDryads  );
+	aRooms.put ( "cave"   , vCave    );
+ 	aRooms.put ( "faun"   , vFaun    );
+ 	aRooms.put ( "shrooms", vShrooms );
+ 	aRooms.put ( "squirel", vSquirel );
+ 	aRooms.put ( "flower" , vFlower  );
+     
+	vWitch.setExit ( "south", vDryads );
+	vWitch.setExit ( "north", vForest );
+	vWitch.setExit ( "east" , vForest );
+	vWitch.setExit ( "west" , vForest );
+	vWitch.setExit ( "south-east" , vFlower );
+	
+	vNaiads.setExit ( "south", vForest );
+	vNaiads.setExit ( "north", vDryads );
+	vNaiads.setExit ( "east" , vFaun   );
+	vNaiads.setExit ( "west" , vForest );
+	vNaiads.setExit ( "down" , vCave   );
+    
+	vCave.setExit ("up", vNaiads );
+
+	vDryads.setExit ( "south", vNaiads );
+	vDryads.setExit ( "north", vWitch  );
+	vDryads.setExit ( "east" , vFlower );
+	vDryads.setExit ( "west" , vForest );
+
+	vFaun.setExit ( "south", vForest );
+	vFaun.setExit ( "north", vFlower );
+	vFaun.setExit ( "east" , vForest );
+	vFaun.setExit ( "west" , vNaiads );
+
+	vShrooms.setExit ( "south", vForest );
+	vShrooms.setExit ( "north", vSquirel);
+	vShrooms.setExit ( "east" , vForest );
+	vShrooms.setExit ( "west" , vFlower );
+
+	vSquirel.setExit ( "north", vForest );
+	vSquirel.setExit ( "south", vShrooms);
+	vSquirel.setExit ( "east" , vForest );
+	vSquirel.setExit ( "west" , vForest );
+
+	vFlower.setExit ( "south", vFaun   );
+	vFlower.setExit ( "north", vForest );
+	vFlower.setExit ( "east" , vShrooms);
+	vFlower.setExit ( "west" , vDryads );
+	vFlower.setExit ( "north-west" , vWitch );
+
+
+	vForest.setExit ( "south", vForest1 );
+	vForest.setExit ( "north", vForest  );
+	vForest.setExit ( "east" , vForest2 );
+	vForest.setExit ( "west" , vForest1 );
+
+	vForest1.setExit ( "south", vForest2 );
+	vForest1.setExit ( "north", vForest3 );
+	vForest1.setExit ( "east" , vForest  );
+	vForest1.setExit ( "west" , vForest1 );
+
+	vForest2.setExit ( "south", vForest  );
+	vForest2.setExit ( "north", vForest3 );
+	vForest2.setExit ( "east" , vForest1 );
+	vForest2.setExit ( "west" , vForest2 );
+
+	vForest3.setExit ( "south", vFaun    );
+	vForest3.setExit ( "north", vFlower  );
+	vForest3.setExit ( "east" , vDryads  );
+	vForest3.setExit ( "west" , vForest  );
+
+
+	Item vDague   = new Item("dagger", 8);
+	Item vTheiere = new Item("teapot", 1);
+	Item vFleur   = new Item("flower", 0);
+	Item vNoix    = new Item("nut", 2);
+
+	Item vCailloux = new Item("stone", 1);
+	Item vPantalon = new Item("trouser", 1);
+	vDryads.addItem  ( vTheiere );
+	vSquirel.addItem ( vDague );
+	vFlower.addItem   ( vFleur );
+	vFlower.addItem   ( vFleur );
+	vShrooms.addItem ( vNoix, 666 );
+	vForest.addItem   ( vCailloux );
+	vForest.addItem   ( vPantalon );
+
+	this.aPlayer.setMaxWeight(2);
+	this.aPlayer.setLocation(vForest);
+	
+    } //createRooms()
+
+    /**
+     * Methode traitant une commande.
+     * @param pCommandLine: String entree
+     */
+    public void interpretCommand (final String pCommandLine)
+    {
+	this.aGui.println(pCommandLine);
+        Command vCommand = this.aParser.getCommand(pCommandLine);
+
+        if (vCommand.isUnknown())
+	    {
+		this.aGui.println ( "I don't know what you mean..." );
+	    }
+        else if ( vCommand.getCommandWord().equals("go") )
+	    {
+		this.goRoom (vCommand);
+	    }
+        else if ( vCommand.getCommandWord().equals("help") )
+	    {
+		this.printHelp();
+	    }
+        else if ( vCommand.getCommandWord().equals("quit") )
+	    {
+		if ( vCommand.hasSecondWord() )
+		    aGui.println("Quit what?");
+		else
+		    this.endGame();
+	    }
+        else if ( vCommand.getCommandWord().equals("look") )
+	    {
+		this.look();
+	    }
+	else if ( vCommand.getCommandWord().equals("eat") )
+	    {
+		this.eat( vCommand );
+	    }
+	else if ( vCommand.getCommandWord().equals("back") )
+	    {
+		this.back( vCommand );
+	    }
+	else if ( vCommand.getCommandWord().equals("test") )
+	    {
+		this.test( vCommand );
+	    }
+	else if ( vCommand.getCommandWord().equals("take") )
+	    {
+		this.take( vCommand );
+	    }
+	else if ( vCommand.getCommandWord().equals("drop") )
+	    {
+		this.drop( vCommand );
+	    }
+	else if ( vCommand.getCommandWord().equals("items") )
+	    {
+		this.items( vCommand );
+	    }
+	else
+	    {
+		this.aGui.println ( "Looks like the dev forgot to implement that command but yet whitelisted it." );
+	    }
+    } // processCommand()
+
+
+    private void items( final Command pCommand )
+    {
+	if ( pCommand.hasSecondWord() )
+	    this.aGui.println("That doesn't make any sense");
+	else
+	    this.aGui.println(this.aPlayer.makeItemsDescription());
+			
+    }
+    
+    private void take( final Command pCommand )
+    {
+	if ( pCommand.hasSecondWord() )
+	    {
+		String vSec = pCommand.getSecondWord();
+		Room vLocation = this.aPlayer.getLocation();
+		Item vItem  = vLocation.getItemByName( vSec );
+		if (vItem == null)
+		    this.aGui.println( "This isn't something you can take." );
+		else if (this.aPlayer.canCarryItem( vItem) )
+		{
+		    this.aPlayer.addItem( vItem );
+		    vLocation.removeItem( vItem );
+		    this.aGui.println( "You took a " + vSec );
+		}
+		else
+		    this.aGui.println("You cannot carry more weight.");
+	    }
+	else
+	    {
+		this.aGui.println ( "Take what?" );	    }
+    }
+    
+    private void drop( final Command pCommand )
+    {
+	if ( pCommand.hasSecondWord() )
+	    {
+		String vSec = pCommand.getSecondWord();
+		Room vLocation = this.aPlayer.getLocation();
+		Item vItem  = this.aPlayer.getItemByName( vSec );
+		if (vItem == null)
+		    this.aGui.println( "You don't have this." );
+		else {
+		    this.aPlayer.removeItem( vItem );
+		    vLocation.addItem( vItem );
+		    this.aGui.println( "You dropped a " + vSec );
+		}
+	    }
+	else
+	    {
+		this.aGui.println ( "Drop what?" );	    }
+    }
+    
+    /**
+     * Procédure appelée par la commande 'eat'
+     */
+    private void eat ( final Command pCommand )
+    {
+	if ( pCommand.hasSecondWord() )
+	    {
+		if ( pCommand.getSecondWord().equals("nut") )
+		    {
+			Item vNut = this.aPlayer.getItemByName("nut");
+			if (vNut == null)
+			    this.aGui.println( "You don't have anything to eat." );
+			else
+			    {
+				this.aPlayer.removeItem( vNut );
+				this.aPlayer.setMaxWeight(this.aPlayer.getMaxWeight()+1);
+				this.aGui.println( "You just ate a nut.\nYou feel good, stronger than ever." );
+			    }
+		    }
+		else
+		    this.aGui.println("You can't eat that.");
+	    }
+	else
+	    this.aGui.println("You try to eat thin air. You kind of like it.");
+    } //eat()
+    
+    /**
+     * Procedure appelee par la commande 'look'
+     */
+    private void look ()
+    {
+	this.printLocationInfos();
+    } // eat()
+
+    // implementations of user commands:
+
+    /**
+     * Procedure affichant l'aide.
+     */
+    private void printHelp ()
+    {
+	this.aGui.println( "You are lost in this mysterious forest.\nYour command words are:" );   
+	this.aGui.println( this.aParser.getCommandList() );
+    } //printHelp()
+
+    
+    /**
+     * Methode changeant la piece courrante et appellant l'affichage de description de la nouvelle piece.
+     * @param pNextRoom: Room dans laquelle on se deplace
+     */
+    private void changeRoom( final Room pNextRoom )
+    {
+	this.aPlayer.setLocation( pNextRoom );
+	this.printLocationInfos();
+	if (this.aPlayer.getLocation().getImageName() != null)
+	    this.aGui.showImage(aPlayer.getLocation().getImageName());
+    } //changeRoom()
+
+    
+    /**
+     * Procedure changeant la piece courante.
+     * @param pCommand objet Command dont on sait que le premier mot est 'go'
+     */
+    private void goRoom (final Command pCommand)
+    {
+        if ( ! pCommand.hasSecondWord() )
+	    {
+		this.aGui.println("Go where?");
+		return;
+	    }
+        
+        Room vNextRoom = this.aPlayer.getLocation().getExit ( pCommand.getSecondWord() );
+        if (vNextRoom == null) {
+           this.aGui.println ( "There is no door!" );
+        } else {
+	    this.aPlayer.pushPreviousLocation( vNextRoom );
+	    this.changeRoom( vNextRoom );
+        }
+    } //goRoom()
+
+    /**
+     * Methode permettant de revenir en arriere
+     * @param pCommand: commande entree
+     */
+    private void back( final Command pCommand )
+    {
+	if ( pCommand.hasSecondWord() )
+	    {
+		this.aGui.println("Backstreet's back alright!");
+	    } else
+	    {
+		if ( this.aPlayer.hasPreviousLocations() )
+		    this.aGui.println ( "There is no going back." );
+		else
+		    this.changeRoom( this.aPlayer.goToPreviousLocation() );
+	    }
+    } //back()
+    /**
+     * Find the file requested
+     * @return an URL indicating the emplacement of the requested file OR null if the file doesn't exist/the filename is invalid.
+     * @param pName the name of the file
+     * @param pType the Subfolder of Ressources/ the file should be in.
+     */
+    private URL findRessource( final String pName, final String pType)
+    {
+	if ( pName.matches("[a-zA-Z_0-9]*.[a-zA-Z_0-9]*") )
+	    {
+		String vPath = "Ressources/" + pType + "/" + pName; 
+		URL vURL = this.getClass().getClassLoader().getResource( vPath );
+		if (vURL == null)
+		    this.aGui.println ( "Ressource not found: " + vPath );
+		return vURL;
+	    }
+	else {
+	    this.aGui.println ( "Invalid file name" );
+	    return null;
+	}
+
+    }
+    /**
+     * Tries to open a script
+     * @return a Scanner of the text file OR null
+     * @param pName the name of the script (with or without '.txt' at the end)
+     */
+    private Scanner openScript( final String pName)
+    {
+	URL vURL = findRessource( pName, "Scripts" );
+	try {
+	    return new Scanner( vURL.openStream() );
+	}
+	catch (NullPointerException e) {
+	    return null;
+	}
+	catch (IOException e) {
+	    return null;
+	}
+    }
+
+    /**
+     * Methode appellee par la commande test
+     * @param pCommand: commande entree
+     */
+    private void test( final Command pCommand )
+    {
+	if ( pCommand.hasSecondWord() )
+	    {
+		String vName = pCommand.getSecondWord();
+		if (! vName.matches(".*.txt") )
+		    vName += ".txt";
+		
+		Scanner vScript = openScript( vName );
+		if (! (vScript == null) )
+		    {
+			while ( vScript.hasNextLine() )
+			    {
+				this.interpretCommand( vScript.nextLine() );
+			    }
+		    }
+	    } else {
+	    this.aGui.println ( "Please specify the script to use." );
+	}
+    }
+
+    /**
+     * @return la description de la piece courante
+     */
+    private String getCurrentRoomName()
+    {
+	return this.aPlayer.getLocation().getDescription();
+    }
+
+	
+    /**
+     * @param pRoomName la description d'une piece
+     * @return un booleen
+     */
+    private boolean estDansPiece( final String pRoomName )
+    {
+	return this.aPlayer.getLocation().getDescription().equals( pRoomName );
+    }
+    
+    /**
+     * Procedure de meurtre
+     */
+    private void kill()
+    {
+	if ( this.aPlayer.getLocation() == this.aRooms.get("witch") )
+	    winGame();
+	else
+	    looseGame();
+    }
+    
+    /**
+     * Procedure de victoire
+     */
+    private void winGame()
+    {
+	this.aGui.println("You win!");
+	endGame();
+    }
+
+    /**
+     * Procedure de defaite
+     */
+    private void looseGame()
+    {
+	this.aGui.println("You lost!");
+	endGame();
+    }
+    
+    /**
+     * Procedure terminant le jeu.
+     */
+    private void endGame()
+    {
+	this.aGui.println("Thank you for playing.  Good bye.");
+        this.aGui.enable(false);
+    } //endGame()
+
+    
+}

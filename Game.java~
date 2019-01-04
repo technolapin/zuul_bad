@@ -1,0 +1,257 @@
+import java.util.HashMap;
+
+/**
+ * La classe principale du jeu
+ */
+public class Game
+{
+    private Room    aCurrentRoom;
+    private Parser  aParser;
+    private HashMap<String, Room> aRooms;
+
+    /**
+     * Le constructeur de Game
+     */
+    public Game ()
+    {
+	this.aRooms = new HashMap<String, Room>();
+        createRooms();
+        this.aParser = new Parser ();
+    } //Game()
+
+
+    /**
+     * Procedure affichant la description de la piece et les sorties.
+     */
+    private void printLocationInfos()
+    {
+	System.out.println ( this.aCurrentRoom.getLongDescription() );
+    } //printLocationInfos()
+
+    /**
+     * Procedure creant les pieces et les reliant entre elles.
+     */
+    private void createRooms ()
+    {
+
+
+	Room vForest  = new Room ("lost in the forest.");
+	Room vForest1 = new Room ("lost in the forest.");
+	Room vForest2 = new Room ("lost in the forest.");
+	Room vForest3 = new Room ("lost in the forest.");
+	Room vWitch   = new Room ("at the wicked witch's house.");
+	Room vNaiads  = new Room ("in a warm, enlighted and clean cave with some kinds of clear ponds.");
+	Room vDryads  = new Room ("in a dense and dark part of the forest.");
+	Room vCave    = new Room ("surrounded by calm darknesses.\nThe water is clean and warm and the walls are veined by a phosphorescent mineral.\nYou feel comfortable.");
+	Room vFaun    = new Room ("near a convenient house-shaped tree.");
+	Room vShrooms = new Room ("surrounded by mushrooms. They are absolutly everywhere.");
+	Room vSquirel = new Room ("at some big tree with an hole in it.");
+	Room vFlower  = new Room ("in a warm and windy glade, covered by nice and odorant flowers of all sort.");
+
+
+	aRooms.put ( "forest" , vForest  );
+	aRooms.put ( "forest1", vForest1 );
+	aRooms.put ( "forest2", vForest2 );
+	aRooms.put ( "forest3", vForest3 );
+	aRooms.put ( "witch"  , vWitch   );
+ 	aRooms.put ( "naiads" , vNaiads  );
+ 	aRooms.put ( "dryads" , vDryads  );
+	aRooms.put ( "cave"   , vCave    );
+ 	aRooms.put ( "faun"   , vFaun    );
+ 	aRooms.put ( "Shrooms", vShrooms );
+ 	aRooms.put ( "squirel", vSquirel );
+ 	aRooms.put ( "flower" , vFlower  );
+     
+	vWitch.setExit ( "south", vDryads );
+	vWitch.setExit ( "north", vForest );
+	vWitch.setExit ( "east" , vForest );
+	vWitch.setExit ( "west" , vForest );
+	
+	vNaiads.setExit ( "south", vForest );
+	vNaiads.setExit ( "north", vDryads );
+	vNaiads.setExit ( "east" , vFaun   );
+	vNaiads.setExit ( "west" , vForest );
+	vNaiads.setExit ( "down" , vCave   );
+    
+	vCave.setExit ("up", vNaiads );
+
+	vDryads.setExit ( "south", vNaiads );
+	vDryads.setExit ( "north", vWitch  );
+	vDryads.setExit ( "east" , vFlower );
+	vDryads.setExit ( "west" , vForest );
+
+	vFaun.setExit ( "south", vForest );
+	vFaun.setExit ( "north", vFlower );
+	vFaun.setExit ( "east" , vForest );
+	vFaun.setExit ( "west" , vNaiads );
+
+	vShrooms.setExit ( "south", vForest );
+	vShrooms.setExit ( "north", vSquirel);
+	vShrooms.setExit ( "east" , vForest );
+	vShrooms.setExit ( "west" , vFlower );
+
+	vSquirel.setExit ( "north", vForest );
+	vSquirel.setExit ( "south", vShrooms);
+	vSquirel.setExit ( "east" , vForest );
+	vSquirel.setExit ( "west" , vForest );
+
+	vFlower.setExit ( "south", vFaun   );
+	vFlower.setExit ( "north", vForest );
+	vFlower.setExit ( "east" , vShrooms);
+	vFlower.setExit ( "west" , vDryads );
+
+
+	vForest.setExit ( "south", vForest1 );
+	vForest.setExit ( "north", vForest  );
+	vForest.setExit ( "east" , vForest2 );
+	vForest.setExit ( "west" , vForest1 );
+
+	vForest1.setExit ( "south", vForest2 );
+	vForest1.setExit ( "north", vForest3 );
+	vForest1.setExit ( "east" , vForest  );
+	vForest1.setExit ( "west" , vForest1 );
+
+	vForest2.setExit ( "south", vForest  );
+	vForest2.setExit ( "north", vForest3 );
+	vForest2.setExit ( "east" , vForest1 );
+	vForest2.setExit ( "west" , vForest2 );
+
+	vForest3.setExit ( "south", vFaun    );
+	vForest3.setExit ( "north", vFlower  );
+	vForest3.setExit ( "east" , vDryads  );
+	vForest3.setExit ( "west" , vForest  );
+	
+	this.aCurrentRoom = vForest;
+	
+    } //createRooms()
+
+    /**
+     * Procédure appelée par la commande 'eat'
+     */
+    private void eat ()
+    {
+	System.out.println( "You just ate something that had been left on the ground." );
+    } //eat()
+    
+    /**
+     * Procedure appelee par la commande 'look'
+     */
+    private void look ()
+    {
+	this.printLocationInfos();
+    } // eat()
+    
+    /**
+     * Procedure changeant la piece courante.
+     * @param pCommand objet Command dont on sait que le premier mot est 'go'
+     */
+    private void goRoom (final Command pCommand)
+    {
+        if ( ! pCommand.hasSecondWord() )
+	    {
+            System.out.println("Go where?");
+            return;
+	    }
+        
+        Room vNextRoom = this.aCurrentRoom.getExit ( pCommand.getSecondWord() );
+        if (vNextRoom == null) {
+            System.out.println ( "There is no door!" );
+        } else {
+            this.aCurrentRoom = vNextRoom;
+	    this.printLocationInfos();
+        }
+    } //goRoom()
+    
+    /**
+     * Procedure affichant le texte d'acceuil.
+     */
+    private void printWelcome()
+    {
+        System.out.println ( "Welcome to “Within the Woods”" );
+        System.out.println ( "Type 'help' if you want help (you won't get any)." );
+    this.printLocationInfos();
+    } //printWelcome()
+
+    /**
+     * Procedure affichant l'aide.
+     */
+    private void printHelp ()
+    {
+	System.out.println( "You are lost. You are alone.\nYou wander around at the university.\nYour command words are:" );   
+	System.out.println( this.aParser.getCommandList() );
+    } //printHelp()
+
+    /**
+     * Methode permettant de quiter le jeu.
+     * @param pCmd Commande dont on sait que le premier mot est 'quit'
+     * @return Le boolean permettant eventuellement de sortir du while.
+     */
+    private boolean quit (final Command pCmd)
+    {
+        if ( pCmd.hasSecondWord() ) {
+            System.out.println ( "Quit what ?" );
+            return false;
+        } else {
+            return true;
+        }
+    } //quit()
+
+    /**
+     * Methode traitant une commande.
+     * @param pCmd Objet Command
+     * @return Un boolean servant a eventuellement quitter le jeu.
+     */
+    private boolean processCommand (final Command pCmd)
+    {
+        if (pCmd.isUnknown()) {
+            System.out.println ( "I don't know what you mean..." );
+            return false;
+        }
+        else if ( pCmd.getCommandWord().equals("go") ) {
+            this.goRoom (pCmd);
+            return false;
+        }
+        else if ( pCmd.getCommandWord().equals("help") ) {
+            this.printHelp();
+            return false;
+        }
+        else if ( pCmd.getCommandWord().equals("quit") ) {
+            return this.quit(pCmd);
+        }
+        else if ( pCmd.getCommandWord().equals("look") ) {
+	    this.look();
+	    return false;
+	}
+	else if ( pCmd.getCommandWord().equals("eat") ) {
+	    this.eat();
+	    return false;
+	}else {
+            System.out.println ( "Looks like the dev forgot to implement that command but yet whitelisted it." );
+            return false;
+        }
+    } // processCommand()
+
+
+
+
+
+    /**
+     * Procedure de jeu.
+     */
+    public void play()
+    {
+        this.printWelcome();
+        boolean vFinished = false;
+        while (! vFinished){
+            Command vCmd = this.aParser.getCommand();
+            vFinished = this.processCommand(vCmd);
+        }
+        System.out.println ("Thank you for playing.  Good bye.");
+    } //play()   
+    
+
+
+
+} // Game
+
+

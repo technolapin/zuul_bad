@@ -1,0 +1,99 @@
+import java.util.HashMap;
+
+public class Inventory
+{
+    private HashMap<Item, Integer> aItems;
+    private int aWeight;
+
+    public Inventory()
+    {
+	this.aItems = new HashMap<Item, Integer>();
+	this.aWeight = 0;
+    }
+
+
+    
+    public Item getByName( final String pItemName )
+    {
+	for (Item vItem : this.aItems.keySet() )
+	    {
+		if ( vItem.getDescription().equals( pItemName ) )
+		    {
+			return vItem;
+		    }
+	    }
+	return null;
+    }
+    
+    public boolean hasItem( final Item pItem )
+    {
+	return ( this.aItems.get( pItem ) != null );
+    }
+
+    public boolean isEmpty()
+    {
+	return this.aItems.isEmpty();
+    }
+
+    
+    public void add( final Item pItem )
+    {
+	if ( this.hasItem(pItem) )
+	    this.aItems.put( pItem, this.aItems.get( pItem ) +1 );
+	else
+	    this.aItems.put( pItem, 1 );
+	
+	this.aWeight += pItem.getWeight();
+    }
+    
+    public void add( final Item pItem, final int pNombre )
+    {
+	for (int vI = 0; vI < pNombre; vI++)
+	    this.add( pItem );
+    }
+
+    public void remove( final Item pItem )
+    {
+	if (this.aItems.get( pItem ) > 1)
+	    this.aItems.put( pItem, this.aItems.get( pItem ) - 1);
+	else
+	    this.aItems.remove( pItem );
+	
+	this.aWeight -= pItem.getWeight();
+    }
+
+    public String toString()
+    {
+	if ( this.isEmpty() )
+	    return "";
+	else
+	    {
+		
+		String vS = "";
+		for (Item vItem : this.aItems.keySet())
+		    {
+			Integer vNombre = this.aItems.get( vItem );
+			vS += (	"\n            " + vNombre.toString() + " " +
+				vItem.getDescription() +
+				( (vNombre > 1) ? "s":"" ) +
+				"("+
+				(new Integer(vItem.getWeight() * vNombre)
+				 ).toString()+")" );
+
+		    }
+		return vS;
+	    }
+    }
+
+    public int totalWeight()
+    {
+	int vTotal = 0;
+	for ( Item vItem : this.aItems.keySet() )
+	    {
+		vTotal += vItem.getWeight();
+	    }
+	return vTotal;
+    }
+    
+    
+}

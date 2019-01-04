@@ -1,0 +1,60 @@
+//import java.util.HashMap;
+
+public abstract class Entity
+{
+    private String    aName;
+    private Inventory aInventory;
+
+    public Entity( final String pN )
+    {
+	this.aName      = pN;
+	this.aInventory = new Inventory();
+    }
+
+
+    public String getName()
+    {
+	return this.aName;
+    }
+
+    public Item getItemByName( final String pItemName )
+    {
+	return this.aInventory.getByName( pItemName );
+    }
+    
+    public boolean hasItem( final Item pItem )
+    {
+	return this.aInventory.hasItem( pItem );
+    }
+    
+    public boolean hasItems()
+    {
+	return (! this.aInventory.isEmpty());
+    }
+
+    public void addItem( final Item pItem )
+    {
+	this.aInventory.add( pItem );
+    }
+
+    public void addItem( final Item pItem, final int pNombre )
+    {
+	for (int vI = 0; vI < pNombre; vI++)
+	    this.addItem( pItem );
+    }
+
+    public void removeItem( final Item pItem )
+    {
+	this.aInventory.remove( pItem );
+    }
+    public Inventory getInventory()
+    {
+	return this.aInventory;
+    }
+
+    public int getCarriedWeight()
+    {
+	return this.aInventory.totalWeight();
+    }
+
+}

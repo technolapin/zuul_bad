@@ -1,0 +1,7 @@
+#BlueJ class context
+comment0.target=Main
+comment0.text=\n\ Cette\ classe\ est\ necessaire\ pour\ faire\ tourner\ le\ programme\ sans\ l'aide\ de\ BlueJ\n
+comment1.params=pArgs
+comment1.target=void\ main(java.lang.String[])
+comment1.text=\n\ Methode\ d'entree\ du\ programme\n\ @param\ pArgs\ eventuels\ arguments\ fournis\ au\ programme.\n
+numComments=2
