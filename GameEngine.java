@@ -203,53 +203,56 @@ public class GameEngine
 	    {
 		this.aGui.println ( "I don't know what you mean..." );
 	    }
-        else if ( vCommand.getCommandWord().equals("go") )
-	    {
-		this.goRoom (vCommand);
-	    }
-        else if ( vCommand.getCommandWord().equals("help") )
-	    {
-		this.printHelp();
-	    }
-        else if ( vCommand.getCommandWord().equals("quit") )
-	    {
-		if ( vCommand.hasSecondWord() )
-		    aGui.println("Quit what?");
-		else
-		    this.endGame();
-	    }
-        else if ( vCommand.getCommandWord().equals("look") )
-	    {
-		this.look();
-	    }
-	else if ( vCommand.getCommandWord().equals("eat") )
-	    {
-		this.eat( vCommand );
-	    }
-	else if ( vCommand.getCommandWord().equals("back") )
-	    {
-		this.back( vCommand );
-	    }
-	else if ( vCommand.getCommandWord().equals("test") )
-	    {
-		this.test( vCommand );
-	    }
-	else if ( vCommand.getCommandWord().equals("take") )
-	    {
-		this.take( vCommand );
-	    }
-	else if ( vCommand.getCommandWord().equals("drop") )
-	    {
-		this.drop( vCommand );
-	    }
-	else if ( vCommand.getCommandWord().equals("items") )
-	    {
-		this.items( vCommand );
-	    }
-	else
-	    {
-		this.aGui.println ( "Looks like the dev forgot to implement that command but yet whitelisted it." );
-	    }
+        else
+	    switch (vCommand.getCommandWord())
+		{
+		case GO   :
+		    this.goRoom(vCommand);
+		    break;
+		    
+		case HELP :
+		    this.printHelp();
+		    break;
+
+		case QUIT :
+		    if ( vCommand.hasSecondWord() )
+			aGui.println("Quit what?");
+		    else
+			this.endGame();
+		    break;
+		    
+		case LOOK :
+		    this.look();
+		    break;
+
+		case EAT  :
+		    this.eat(vCommand);
+		    break;
+
+		case BACK :
+		    this.back( vCommand );
+		    break;
+
+		case TEST :
+		    this.test(vCommand);
+		    break;
+
+		case TAKE : 
+		    this.take( vCommand );
+		    break;
+
+		case DROP : 
+		    this.drop( vCommand );
+		    break;
+
+		case ITEMS:
+		    this.items( vCommand );
+		    break;
+		    
+		default               :
+		    this.aGui.println ( "Looks like the dev forgot to implement that command but yet whitelisted it." );
+		}
+
     } // processCommand()
 
     /**

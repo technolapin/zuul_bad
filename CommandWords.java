@@ -1,29 +1,29 @@
+import java.util.HashMap;
 
-
-/**
- * This class is part of the "World of Zuul" application. 
- * "World of Zuul" is a very simple, text based adventure game.  
- * 
- * This class holds an enumeration table of all command words known to the game.
- * It is used to recognise commands as they are typed in.
- *
- * @author  Michael Kolling and David J. Barnes + D.Bureau
- * @version 2008.03.30 + 2013.09.15
- */
 public class CommandWords
 {
-    // tableau constant qui contient tous les mots de commande valides
-    private static final String[] sValidCommands = {
+    private HashMap<String, CommandWord> aValidCommands;
+    /*    private static final String[] sValidCommands = {
         "go", "quit", "help", "look", "eat", "back", "test", "take", "drop", "items"
-    };
+	};*/
 
     /**
      * Constructeur par defaut
      */
     public CommandWords()
     {
-        // rien a faire pour le moment...
-    } // CommandWords()
+	this.aValidCommands = new HashMap<String, CommandWord>();
+	this.aValidCommands.put("go"   , CommandWord.GO   );
+	this.aValidCommands.put("quit" , CommandWord.QUIT );
+	this.aValidCommands.put("help" , CommandWord.HELP );
+	this.aValidCommands.put("look" , CommandWord.LOOK );
+	this.aValidCommands.put("eat"  , CommandWord.EAT  );
+	this.aValidCommands.put("back" , CommandWord.BACK );
+	this.aValidCommands.put("test" , CommandWord.TEST );
+	this.aValidCommands.put("take" , CommandWord.TAKE );
+	this.aValidCommands.put("drop" , CommandWord.DROP );
+	this.aValidCommands.put("items", CommandWord.ITEMS);
+    }
 
     /**
      * Verifie si une String donnee fait partie des commandes valides. 
@@ -32,16 +32,8 @@ public class CommandWords
      */
     public boolean isCommand( final String pString )
     {
-        // pour chacune des commandes valides (du tableau constant)
-        for ( int i=0; i<sValidCommands.length; i++ ) {
-            // si elle est egale a pString
-            if ( sValidCommands[i].equals( pString ) )
-                return true;
-        } // for
-        // si nous arrivons la, c'est que la commande
-        // n'a pas ete trouvee dans le tableau
-        return false;
-    } // isCommand()
+	return aValidCommands.containsKey(pString);
+    }
 
     /**
      * Methode construisant et retournant les commandes autorisees dans une String.
@@ -49,11 +41,19 @@ public class CommandWords
      */
     public String makeCommandList ()
     {
-	String vS = "";
-	for (String vCmd : CommandWords.sValidCommands) {
-	    vS += vCmd + " ";
-	}
+	String vS = "";	
+	for (String vCmd : aValidCommands.keySet())
+	    {
+		vS += vCmd + " ";
+	    }
 	return vS;
     }
-    
-} // CommandWords
+
+    public CommandWord getCommand(final String pWord)
+    {
+	if ( this.isCommand(pWord) )
+	    return this.aValidCommands.get(pWord);
+	else
+	    return CommandWord.UNKNOWN;
+    }
+}

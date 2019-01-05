@@ -3,7 +3,7 @@
  */
 public class Command
 {
-    private String aCommandWord;
+    private CommandWord aCommandWord;
     private String aSecondWord;
 
     /**
@@ -11,7 +11,7 @@ public class Command
      * @param pCommandW le mot-commande
      * @param pSecondW  le second mot
      */
-    public Command (final String pCommandW, final String pSecondW )
+    public Command (final CommandWord pCommandW, final String pSecondW )
     {
         this.aCommandWord = pCommandW;
         this.aSecondWord = pSecondW;
@@ -21,7 +21,7 @@ public class Command
      * Accesseur du mot-commande
      * @return le mot-commande
      */
-    public String getCommandWord () { return this.aCommandWord; }
+    public CommandWord getCommandWord () { return this.aCommandWord; }
     /**
      * Accesseur du second mot
      * @return le second mot
@@ -43,7 +43,7 @@ public class Command
      */
     public boolean isUnknown ()
     {
-        return this.aCommandWord == null;
+        return this.aCommandWord == CommandWord.UNKNOWN;
     }
     
 } // Command
