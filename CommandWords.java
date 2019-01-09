@@ -21,18 +21,6 @@ public class CommandWords
 		    }
 	    }
     }
-	/*
-	this.aValidCommands.put("go"   , CommandWord.GO   );
-	this.aValidCommands.put("quit" , CommandWord.QUIT );
-	this.aValidCommands.put("help" , CommandWord.HELP );
-	this.aValidCommands.put("look" , CommandWord.LOOK );
-	this.aValidCommands.put("eat"  , CommandWord.EAT  );
-	this.aValidCommands.put("back" , CommandWord.BACK );
-	this.aValidCommands.put("test" , CommandWord.TEST );
-	this.aValidCommands.put("take" , CommandWord.TAKE );
-	this.aValidCommands.put("drop" , CommandWord.DROP );
-	this.aValidCommands.put("items", CommandWord.ITEMS);
-	*/
 	
 
     /**
