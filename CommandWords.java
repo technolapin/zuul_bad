@@ -3,9 +3,6 @@ import java.util.HashMap;
 public class CommandWords
 {
     private HashMap<String, CommandWord> aValidCommands;
-    /*    private static final String[] sValidCommands = {
-        "go", "quit", "help", "look", "eat", "back", "test", "take", "drop", "items"
-	};*/
 
     /**
      * Constructeur par defaut
@@ -13,6 +10,18 @@ public class CommandWords
     public CommandWords()
     {
 	this.aValidCommands = new HashMap<String, CommandWord>();
+	for(CommandWord vCmd : CommandWord.values())
+	    {
+		if(vCmd != CommandWord.UNKNOWN)
+		    {
+			for (Language vLang : Language.values())
+			    {
+				this.aValidCommands.put(vCmd.toString(vLang), vCmd);
+			    }
+		    }
+	    }
+    }
+	/*
 	this.aValidCommands.put("go"   , CommandWord.GO   );
 	this.aValidCommands.put("quit" , CommandWord.QUIT );
 	this.aValidCommands.put("help" , CommandWord.HELP );
@@ -23,7 +32,8 @@ public class CommandWords
 	this.aValidCommands.put("take" , CommandWord.TAKE );
 	this.aValidCommands.put("drop" , CommandWord.DROP );
 	this.aValidCommands.put("items", CommandWord.ITEMS);
-    }
+	*/
+	
 
     /**
      * Verifie si une String donnee fait partie des commandes valides. 
