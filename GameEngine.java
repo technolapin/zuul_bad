@@ -285,10 +285,15 @@ public class GameEngine
 		}
 		else if (vWord.equals("jump") )
 		    {
-			this.aGui.println("You look into the stone, the stone look into you. Your surroundings changed without you noticing it.");
-			Room vDestination = vStone.discharge();
-			this.aPlayer.resetStack();
-			this.changeRoom( vDestination );
+			if ( vStone.isCharged() )
+			    {
+				this.aGui.println("You look into the stone, the stone look into you. Your surroundings changed without you noticing it.");
+				Room vDestination = vStone.discharge();
+				this.aPlayer.resetStack();
+				this.changeRoom( vDestination );
+			    }
+			else
+			    this.aGui.println("Your look into the stone. Your mind get lost in its plain gray color. You suddendly realize you're getting nowhere.");
 		    }
 		else
 		    this.aGui.println("Stop doing that to the stone!");
