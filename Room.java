@@ -6,6 +6,7 @@ public class Room extends Entity
 {
     
     private HashMap<String, Room> aExits;
+
     private String aImageName;
 
     /**
@@ -17,8 +18,8 @@ public class Room extends Entity
 		  final String pImgName)
     {
 	super( pDescription );
-	this.aExits       = new HashMap<String, Room>();
-	this.aImageName   = pImgName;
+	this.aExits     = new HashMap<String, Room>();
+	this.aImageName = pImgName;
     } // Room
     
 
@@ -30,7 +31,7 @@ public class Room extends Entity
     {
 	return this.getName();
     } // getDescription
-
+ 
     /**
      * Methode construisant et retournant le texte de sortie de la piece.
      * @return la chaine de sortie de la piece
@@ -64,6 +65,10 @@ public class Room extends Entity
 	return this.aExits.get( pDirection );
     } // getExit
 
+    public boolean isExit(final Room pRoom)
+    {
+	return !(this.aExits.get(pRoom.getDescription())==null);
+    }
     /**
      * Retourne la String decrivant pleinement la piece.
      * @return La String a afficher pour decrire la scene.

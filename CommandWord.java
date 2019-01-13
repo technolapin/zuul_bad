@@ -12,6 +12,7 @@ public enum CommandWord
     TEST("test"),
     TAKE("take"),
     DROP("drop"),
+    STONE("stone"),
     ITEMS("items");
 
     private HashMap<Language, String> aWords;

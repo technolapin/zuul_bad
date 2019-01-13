@@ -17,6 +17,13 @@ public class Player extends Entity
 	this.aPreviousRooms = new Stack<Room>();
     }
 
+    /**
+     * vide la stack
+     */
+    public void resetStack()
+    {
+	this.aPreviousRooms = new Stack<Room>();
+    }
 
 
 
@@ -104,4 +111,7 @@ public class Player extends Entity
     {
 	return super.getCarriedWeight() + pItem.getWeight() <= this.getMaxWeight();
     }
+
+
+    
 }

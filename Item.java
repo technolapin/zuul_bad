@@ -3,7 +3,7 @@ public class Item
     private String aDescription;
     private int aWeight;
 
-    public Item( String pDescr, int pWei )
+    public Item( final String pDescr, final int pWei )
     {
 	this.aDescription = pDescr;
 	this.aWeight      = pWei;

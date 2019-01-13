@@ -6,7 +6,10 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
- 
+
+import java.awt.image.BufferedImage;
+import javax.imageio.ImageIO;
+
 import java.awt.Dimension;
 import java.awt.BorderLayout;
 
@@ -102,6 +105,12 @@ public class UserInterface implements ActionListener
         this.aEntryField = new JTextField( 34 );
 
         this.aLog = new JTextArea();
+	/*
+        this.aLog =
+	    new FancyTextArea(
+			      this.loadImage("corgy")
+			      );
+	*/
         this.aLog.setEditable( false );
         JScrollPane vListScroller = new JScrollPane( this.aLog );
         vListScroller.setPreferredSize( new Dimension(200, 200) );
@@ -110,14 +119,15 @@ public class UserInterface implements ActionListener
         JPanel vPanel = new JPanel();
         this.aImage = new JLabel();
 
-        ImageIcon vImgButton = new ImageIcon(this.getClass().getClassLoader().getResource( "Ressources/Images/corgy.jpg" ));
-	this.aButton = new JButton("El famoso", vImgButton);
+	vPanel.setLayout( new BorderLayout() );
+
+        //ImageIcon vImgButton = new ImageIcon(this.getClass().getClassLoader().getResource( "Ressources/Images/corgy.jpg" ));
+	//this.aButton = new JButton("El famoso", vImgButton);
+        //vPanel.add( this.aButton, BorderLayout.EAST );
 	
-        vPanel.setLayout( new BorderLayout() );
         vPanel.add( this.aImage, BorderLayout.NORTH );
         vPanel.add( vListScroller, BorderLayout.CENTER );
         vPanel.add( this.aEntryField, BorderLayout.SOUTH );
-        vPanel.add( this.aButton, BorderLayout.EAST );
 
         this.aMyFrame.getContentPane().add( vPanel, BorderLayout.CENTER );
 
@@ -127,7 +137,7 @@ public class UserInterface implements ActionListener
         } );
 
         this.aEntryField.addActionListener( this );
-        this.aButton.addActionListener( this );
+        //this.aButton.addActionListener( this );
 
         this.aMyFrame.pack();
         this.aMyFrame.setVisible( true );
@@ -158,4 +168,24 @@ public class UserInterface implements ActionListener
 
         this.aEngine.interpretCommand( vInput );
     } // processCommand()
+
+    private BufferedImage loadImage(final String pImgName)
+    {
+	BufferedImage vImg;
+	try {
+	    vImg = ImageIO.read(this.getClass()
+				.getClassLoader()
+				.getResource("Ressources/Images/"
+					     + pImgName
+					     + ".jpg")
+				);
+	}
+	catch(Exception pE)
+	    {
+		this.println("Erreur: Image manquante!");
+		vImg = null;
+	    }
+	return vImg;
+    }
+    
 } // UserInterface 

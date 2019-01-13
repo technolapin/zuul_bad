@@ -18,7 +18,8 @@ public class GameEngine
     private UserInterface aGui;
     private HashMap<String, Room> aRooms;
     private Player aPlayer;
-    
+    private int aTimeLimit;
+    private int aTimeSpent;
     /**
      * Constructeur de la classe
      */
@@ -27,6 +28,8 @@ public class GameEngine
         this.aParser = new Parser();
 	this.aRooms  = new HashMap<String, Room>();
 	this.aPlayer = new Player("Anon");
+	this.aTimeLimit = 20;
+	this.aTimeSpent = 0;
         createRooms();
     }
     /**
@@ -78,7 +81,9 @@ public class GameEngine
 	String vImgShrooms = vFolder+"/"+"shrooms_res"+"."+vFormat;
 	String vImgSquirel = vFolder+"/"+"squirel_res"+"."+vFormat;
 	String vImgWitch   = vFolder+"/"+"witch_res"+"."+vFormat;
+	String vImgCorgy   = vFolder+"/"+"corgy.jpg";
 
+	Room vSpirit  = new Room ("in a strange forest. You feel observed.", vImgForest);
 
 	
 	Room vForest  = new Room ("lost in the forest.", vImgForest);
@@ -94,7 +99,12 @@ public class GameEngine
 	Room vSquirel = new Room ("at some big tree with an hole in it.", vImgSquirel);
 	Room vFlower  = new Room ("in a warm and windy glade, covered by nice and odorant flowers of all sort.", vImgFlowers);
 
-
+	aRooms.put("spirit", vSpirit);
+	vSpirit.setExit("north", vForest);
+	vSpirit.setExit("south", vForest);
+	vSpirit.setExit("east", vForest);
+	vSpirit.setExit("west", vForest);
+	
 	aRooms.put ( "forest" , vForest  );
 	aRooms.put ( "forest1", vForest1 );
 	aRooms.put ( "forest2", vForest2 );
@@ -175,7 +185,7 @@ public class GameEngine
 	Item vFleur   = new Item("flower", 0);
 	Item vNoix    = new Item("nut", 2);
 
-	Item vCailloux = new Item("stone", 1);
+	Item vCailloux = new Beamer("stone", 1);
 	Item vPantalon = new Item("trouser", 1);
 	vDryads.addItem  ( vTheiere );
 	vSquirel.addItem ( vDague );
@@ -186,7 +196,7 @@ public class GameEngine
 	vForest.addItem   ( vPantalon );
 
 	this.aPlayer.setMaxWeight(2);
-	this.aPlayer.setLocation(vForest);
+	this.aPlayer.setLocation(vSpirit);
 	
     } //createRooms()
 
@@ -248,6 +258,10 @@ public class GameEngine
 		case ITEMS:
 		    this.items( vCommand );
 		    break;
+
+		case STONE:
+		    this.stone( vCommand );
+		    break;
 		    
 		default               :
 		    this.aGui.println ( "Looks like the dev forgot to implement that command but yet whitelisted it." );
@@ -255,6 +269,37 @@ public class GameEngine
 
     } // processCommand()
 
+
+    public void stone(final Command pCommand)
+    {
+	Beamer vStone = (Beamer) this.aPlayer.getItemByName("stone");
+	if ( vStone == null)
+	    this.aGui.println("You don't have any stone.");
+	    
+	else if ( pCommand.hasSecondWord() )
+	    {
+	        String vWord = pCommand.getSecondWord();
+		if (vWord.equals("infuse")) {
+		    vStone.charge(this.aPlayer.getLocation());
+		    this.aGui.println("The stone takes the colour of the ambiant light.");
+		}
+		else if (vWord.equals("jump") )
+		    {
+			this.aGui.println("You look into the stone, the stone look into you. Your surroundings changed without you noticing it.");
+			Room vDestination = vStone.discharge();
+			this.aPlayer.resetStack();
+			this.changeRoom( vDestination );
+		    }
+		else
+		    this.aGui.println("Stop doing that to the stone!");
+	    }
+	else
+	    this.aGui.println("You put the stone on your head. It has no effect.");
+	
+    }
+
+    
+    
     /**
      * Procédure appelée par la commande 'items'
      * @param pCommand une commande dont on sait que le mot-commande est 'items'
@@ -395,11 +440,26 @@ public class GameEngine
         if (vNextRoom == null) {
            this.aGui.println ( "There is no door!" );
         } else {
-	    this.aPlayer.pushPreviousLocation( vNextRoom );
+	    if ( vNextRoom.isExit(this.aPlayer.getLocation()) )
+		{
+		    this.aPlayer.pushPreviousLocation( vNextRoom );
+		}
+	    else
+		{
+		    this.aPlayer.resetStack();
+		}
 	    this.changeRoom( vNextRoom );
+	    this.addTime();
         }
     } //goRoom()
 
+    private void addTime()
+    {
+	this.aTimeSpent += 1;
+	if (this.aTimeSpent >= this.aTimeLimit)
+	    looseGame();
+    }
+    
     /**
      * Methode permettant de revenir en arriere
      * @param pCommand: commande entree
