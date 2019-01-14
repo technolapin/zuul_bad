@@ -20,6 +20,8 @@ import java.awt.event.WindowEvent;
 
 import java.net.URL;
 
+import java.awt.Color;
+
 
 /**
  * This class implements a simple graphical user interface with a text entry
@@ -35,7 +37,6 @@ public class UserInterface implements ActionListener
     private JTextField aEntryField;
     private JTextArea  aLog;
     private JLabel     aImage;
-    private JButton    aButton;
 
     /**
      * Construct a UserInterface. As a parameter, a Game Engine
@@ -102,16 +103,19 @@ public class UserInterface implements ActionListener
     private void createGUI()
     {
         this.aMyFrame = new JFrame( "Zork" );
+	
         this.aEntryField = new JTextField( 34 );
-
-        this.aLog = new JTextArea();
+	this.aEntryField.setBackground(new Color(10, 23, 0));
+	this.aEntryField.setForeground(new Color(150, 180, 100));
+	//        this.aLog = new JTextArea();
+	this.aLog = new FancyTextArea(RessourcesFetcher.openImage("background_text"));
 	/*
-        this.aLog =
-	    new FancyTextArea(
-			      this.loadImage("corgy")
-			      );
+	  this.aLog.setImage(
+	  RessourcesFetcher.openImage("corgy")
+	  );
 	*/
         this.aLog.setEditable( false );
+
         JScrollPane vListScroller = new JScrollPane( this.aLog );
         vListScroller.setPreferredSize( new Dimension(200, 200) );
         vListScroller.setMinimumSize( new Dimension(100,100) );
@@ -121,12 +125,8 @@ public class UserInterface implements ActionListener
 
 	vPanel.setLayout( new BorderLayout() );
 
-        //ImageIcon vImgButton = new ImageIcon(this.getClass().getClassLoader().getResource( "Ressources/Images/corgy.jpg" ));
-	//this.aButton = new JButton("El famoso", vImgButton);
-        //vPanel.add( this.aButton, BorderLayout.EAST );
-	
         vPanel.add( this.aImage, BorderLayout.NORTH );
-        vPanel.add( vListScroller, BorderLayout.CENTER );
+	vPanel.add( vListScroller, BorderLayout.CENTER );
         vPanel.add( this.aEntryField, BorderLayout.SOUTH );
 
         this.aMyFrame.getContentPane().add( vPanel, BorderLayout.CENTER );
@@ -137,7 +137,6 @@ public class UserInterface implements ActionListener
         } );
 
         this.aEntryField.addActionListener( this );
-        //this.aButton.addActionListener( this );
 
         this.aMyFrame.pack();
         this.aMyFrame.setVisible( true );
@@ -148,7 +147,8 @@ public class UserInterface implements ActionListener
      * Actionlistener interface for entry textfield.
      * @param pE un ActionEvent
      */
-    public void actionPerformed( final ActionEvent pE ) 
+    public void
+	actionPerformed( final ActionEvent pE ) 
     {
 	String vActionCmd =  pE.getActionCommand();
 	if (vActionCmd=="El famoso")
@@ -157,6 +157,7 @@ public class UserInterface implements ActionListener
 	    this.processCommand();
     } // actionPerformed(.)
 
+    
     /**
      * A command has been entered. Read the command and do whatever is 
      * necessary to process it.
@@ -168,24 +169,5 @@ public class UserInterface implements ActionListener
 
         this.aEngine.interpretCommand( vInput );
     } // processCommand()
-
-    private BufferedImage loadImage(final String pImgName)
-    {
-	BufferedImage vImg;
-	try {
-	    vImg = ImageIO.read(this.getClass()
-				.getClassLoader()
-				.getResource("Ressources/Images/"
-					     + pImgName
-					     + ".jpg")
-				);
-	}
-	catch(Exception pE)
-	    {
-		this.println("Erreur: Image manquante!");
-		vImg = null;
-	    }
-	return vImg;
-    }
     
 } // UserInterface 

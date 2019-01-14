@@ -5,12 +5,9 @@ import java.util.Scanner;
 import java.io.IOException;
 import java.lang.NullPointerException;
 
-//import java.io.FileReader;
-//import java.io.FileNotFoundException;
-
 
 /**
- * La classe gérant le jeu.
+ * La classe gerant le jeu.
  */
 public class GameEngine
 {
@@ -20,6 +17,8 @@ public class GameEngine
     private Player aPlayer;
     private int aTimeLimit;
     private int aTimeSpent;
+
+
     /**
      * Constructeur de la classe
      */
@@ -28,10 +27,12 @@ public class GameEngine
         this.aParser = new Parser();
 	this.aRooms  = new HashMap<String, Room>();
 	this.aPlayer = new Player("Anon");
-	this.aTimeLimit = 20;
+	this.aTimeLimit = 200;
 	this.aTimeSpent = 0;
         createRooms();
-    }
+    } //GameEngine()
+    
+
     /**
      * Initie aGui
      * @param userInterface: l'interface du jeu
@@ -40,7 +41,7 @@ public class GameEngine
     {
         this.aGui = userInterface;
         this.printWelcome();
-    }
+    } //setGUI()
 
     
     /**
@@ -51,6 +52,7 @@ public class GameEngine
 	this.aGui.println ( this.aPlayer.getLocation().getLongDescription() );
     } //printLocationInfos()
 
+    
     /**
      * Print out the opening message for the player.
      */
@@ -60,7 +62,7 @@ public class GameEngine
         this.aGui.println ( "Type 'help' if you want help (you won't get any)." );
 	this.printLocationInfos();
         this.aGui.showImage(aPlayer.getLocation().getImageName());
-    }
+    } //printWelcome()
     
 
     /**
@@ -200,6 +202,7 @@ public class GameEngine
 	
     } //createRooms()
 
+    
     /**
      * Methode traitant une commande.
      * @param pCommandLine: String entree
@@ -267,9 +270,13 @@ public class GameEngine
 		    this.aGui.println ( "Looks like the dev forgot to implement that command but yet whitelisted it." );
 		}
 
-    } // processCommand()
+    } // interpretCommand()
 
 
+    /**
+     * procedure appellee par la commande stone
+     * @param pCommand la commande entree
+     */
     public void stone(final Command pCommand)
     {
 	Beamer vStone = (Beamer) this.aPlayer.getItemByName("stone");
@@ -301,12 +308,11 @@ public class GameEngine
 	else
 	    this.aGui.println("You put the stone on your head. It has no effect.");
 	
-    }
-
+    } //stone()
     
     
     /**
-     * Procédure appelée par la commande 'items'
+     * Procedure appelee par la commande 'items'
      * @param pCommand une commande dont on sait que le mot-commande est 'items'
      */
     private void items( final Command pCommand )
@@ -316,10 +322,11 @@ public class GameEngine
 	else
 	    this.aGui.println(this.aPlayer.makeItemsDescription());
 			
-    }
+    } //items()
 
+    
     /**
-     * Procédure appelée par la commande 'take'
+     * Procedure appelee par la commande 'take'
      * @param pCommand une commande dont on sait que le mot-commande est 'take'
      */
     private void take( final Command pCommand )
@@ -343,10 +350,11 @@ public class GameEngine
 	else
 	    {
 		this.aGui.println ( "Take what?" );	    }
-    }
+    } //take()
 
+    
     /**
-     * Procédure appelée par la commande 'drop'
+     * Procedure appelee par la commande 'drop'
      * @param pCommand une commande dont on sait que le mot-commande est 'drop'
      */
     private void drop( final Command pCommand )
@@ -367,10 +375,11 @@ public class GameEngine
 	else
 	    {
 		this.aGui.println ( "Drop what?" );	    }
-    }
+    } //drop()
+
     
     /**
-     * Procédure appelée par la commande 'eat'
+     * Procedure appelee par la commande 'eat'
      * @param pCommand une commande dont on sait que le mot-commande est 'eat'
      */
     private void eat ( final Command pCommand )
@@ -395,6 +404,7 @@ public class GameEngine
 	else
 	    this.aGui.println("You try to eat thin air. You kind of like it.");
     } //eat()
+
     
     /**
      * Procedure appelee par la commande 'look'
@@ -402,10 +412,9 @@ public class GameEngine
     private void look ()
     {
 	this.printLocationInfos();
-    } // eat()
+    } // look()
 
-    // implementations of user commands:
-
+    
     /**
      * Procedure affichant l'aide.
      */
@@ -458,12 +467,17 @@ public class GameEngine
         }
     } //goRoom()
 
+
+    /**
+     * incremente le temps passe de 1
+     */
     private void addTime()
     {
 	this.aTimeSpent += 1;
 	if (this.aTimeSpent >= this.aTimeLimit)
 	    looseGame();
-    }
+    } //addTime()
+
     
     /**
      * Methode permettant de revenir en arriere
@@ -482,47 +496,8 @@ public class GameEngine
 		    this.changeRoom( this.aPlayer.goToPreviousLocation() );
 	    }
     } //back()
-    /**
-     * Find the file requested
-     * @return an URL indicating the emplacement of the requested file OR null if the file doesn't exist/the filename is invalid.
-     * @param pName the name of the file
-     * @param pType the Subfolder of Ressources/ the file should be in.
-     */
-    private URL findRessource( final String pName, final String pType)
-    {
-	if ( pName.matches("[a-zA-Z_0-9]*.[a-zA-Z_0-9]*") )
-	    {
-		String vPath = "Ressources/" + pType + "/" + pName; 
-		URL vURL = this.getClass().getClassLoader().getResource( vPath );
-		if (vURL == null)
-		    this.aGui.println ( "Ressource not found: " + vPath );
-		return vURL;
-	    }
-	else {
-	    this.aGui.println ( "Invalid file name" );
-	    return null;
-	}
 
-    }
-    /**
-     * Tries to open a script
-     * @return a Scanner of the text file OR null
-     * @param pName the name of the script (with or without '.txt' at the end)
-     */
-    private Scanner openScript( final String pName)
-    {
-	URL vURL = findRessource( pName, "Scripts" );
-	try {
-	    return new Scanner( vURL.openStream() );
-	}
-	catch (NullPointerException e) {
-	    return null;
-	}
-	catch (IOException e) {
-	    return null;
-	}
-    }
-
+    
     /**
      * Methode appellee par la commande test
      * @param pCommand: commande entree
@@ -535,7 +510,7 @@ public class GameEngine
 		if (! vName.matches(".*.txt") )
 		    vName += ".txt";
 		
-		Scanner vScript = openScript( vName );
+		Scanner vScript = RessourcesFetcher.openScript( vName );
 		if (! (vScript == null) )
 		    {
 			while ( vScript.hasNextLine() )
@@ -546,7 +521,8 @@ public class GameEngine
 	    } else {
 	    this.aGui.println ( "Please specify the script to use." );
 	}
-    }
+    } //test()
+
 
     /**
      * @return la description de la piece courante
@@ -554,7 +530,7 @@ public class GameEngine
     private String getCurrentRoomName()
     {
 	return this.aPlayer.getLocation().getDescription();
-    }
+    } //getCurrentRoomName()
 
 	
     /**
@@ -564,7 +540,8 @@ public class GameEngine
     private boolean estDansPiece( final String pRoomName )
     {
 	return this.aPlayer.getLocation().getDescription().equals( pRoomName );
-    }
+    } //estDansPiece()
+
     
     /**
      * Procedure de meurtre
@@ -575,7 +552,8 @@ public class GameEngine
 	    winGame();
 	else
 	    looseGame();
-    }
+    } //kill()
+
     
     /**
      * Procedure de victoire
@@ -584,8 +562,9 @@ public class GameEngine
     {
 	this.aGui.println("You win!");
 	endGame();
-    }
+    } //winGame()
 
+    
     /**
      * Procedure de defaite
      */
@@ -593,7 +572,8 @@ public class GameEngine
     {
 	this.aGui.println("You lost!");
 	endGame();
-    }
+    } //looseGame()
+
     
     /**
      * Procedure terminant le jeu.

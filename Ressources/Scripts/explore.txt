@@ -1,3 +1,4 @@
+go north
 go south
 go south
 go north

@@ -1,12 +1,15 @@
 import java.util.Stack;
 
-
+/**
+ * la classe du joueur
+ */
 public class Player extends Entity
 {
     private Room        aLocation;
     private Stack<Room> aPreviousRooms;
     private int         aMaxWeight;
 
+    
     /**
      * Constructeur de la classe
      * @param pN le nom de l'entite
@@ -17,6 +20,7 @@ public class Player extends Entity
 	this.aPreviousRooms = new Stack<Room>();
     }
 
+    
     /**
      * vide la stack
      */
@@ -24,7 +28,6 @@ public class Player extends Entity
     {
 	this.aPreviousRooms = new Stack<Room>();
     }
-
 
 
     /**
@@ -36,6 +39,7 @@ public class Player extends Entity
 	return this.aLocation;
     }
 
+    
     /**
      * retire la derniere piece visitee de la pile et la retourne
      * @return la derniere piece visitee
@@ -45,6 +49,7 @@ public class Player extends Entity
 	return this.aPreviousRooms.pop();
     }
 
+    
     /**
      * Ajoute une piece a la pile de l'historique des pieces
      * @param pNextRoom la piece a empiler sur la pile des pieces deja visitees
@@ -54,6 +59,7 @@ public class Player extends Entity
 	this.aPreviousRooms.push( this.getLocation() );
     }
 
+    
     /**
      * deplace le Joueur a un endroit donne
      * @param pNextRoom la piece où l'on deplace le joueur
@@ -63,6 +69,7 @@ public class Player extends Entity
 	this.aLocation = pNextRoom;
     } // setLocation()
 
+    
     /**
      * setter de aMaxWeight
      * @param pMW nouveau poids maximal
@@ -72,6 +79,7 @@ public class Player extends Entity
 	this.aMaxWeight = pMW;
     }
 
+    
     /**
      * accesseur de aMaxWeight
      * @return le poids maximal
@@ -81,6 +89,7 @@ public class Player extends Entity
 	return this.aMaxWeight;
     }
 
+    
     /**
      * teste si la pile est vide
      * @return un booleen
@@ -90,6 +99,7 @@ public class Player extends Entity
 	return this.aPreviousRooms.isEmpty();
     }
 
+    
     /**
      * Cree la description de l'inventaire du joueur
      * @return la description de l'inventaire du joueur
@@ -107,6 +117,12 @@ public class Player extends Entity
 		    );
     }
 
+    
+    /**
+     * determine si un item peut etre porte en fonction de son poids
+     * @param pItem un Item
+     * @return true si l'item est assez leger pour etre porte
+     */
     public boolean canCarryItem( final Item pItem )
     {
 	return super.getCarriedWeight() + pItem.getWeight() <= this.getMaxWeight();

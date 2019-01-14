@@ -1,4 +1,5 @@
 import java.util.HashMap;
+
 /**
  * Classe gerant le concept de pieces
  */
@@ -6,9 +7,9 @@ public class Room extends Entity
 {
     
     private HashMap<String, Room> aExits;
-
     private String aImageName;
 
+    
     /**
      * Constructeur de Room
      * @param pDescription La chaine de caractere decrivant la piece.
@@ -31,7 +32,8 @@ public class Room extends Entity
     {
 	return this.getName();
     } // getDescription
- 
+
+    
     /**
      * Methode construisant et retournant le texte de sortie de la piece.
      * @return la chaine de sortie de la piece
@@ -45,6 +47,7 @@ public class Room extends Entity
         return vS;
     } // getExitString()
 
+    
     /**
      * Procedure permettant de relier les pieces entre elles.
      * @param pDirection  La chaine de caractere indiquant la direction.
@@ -54,6 +57,7 @@ public class Room extends Entity
     {
         this.aExits.put (pDirection , pRoom );
     } // setExit()
+
 
     /**
      * Retourne la piece direction demandee
@@ -68,7 +72,9 @@ public class Room extends Entity
     public boolean isExit(final Room pRoom)
     {
 	return !(this.aExits.get(pRoom.getDescription())==null);
-    }
+    } //isExit()
+
+
     /**
      * Retourne la String decrivant pleinement la piece.
      * @return La String a afficher pour decrire la scene.
@@ -89,8 +95,9 @@ public class Room extends Entity
     public boolean isEmpty()
     {
 	return ! this.hasItems();
-    }
+    } //isEmpty()
 
+    
     /**
      * Methode construisant la description des items presents et leur nombre.
      * @return une String listant les items presents.
@@ -102,9 +109,7 @@ public class Room extends Entity
 	    return "There is nothing to take here.";
 	else
 	    return "You can see: "+vS;
-		
-		  
-    }
+    } //makeItemsDescription()
     
 
     /**
@@ -114,7 +119,7 @@ public class Room extends Entity
     public String getImageName()
     {
 	return aImageName;
-    }
+    } //getImageName()
 
 
 } // Room

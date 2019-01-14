@@ -1,3 +1,6 @@
+/**
+ * classe mère de Room et Player
+ */
 public abstract class Entity
 {
     private String    aName;
@@ -10,7 +13,7 @@ public abstract class Entity
     {
 	this.aName      = pN;
 	this.aInventory = new Inventory();
-    }
+    } //Entity()
 
     /**
      * Accesseur de aName
@@ -19,7 +22,7 @@ public abstract class Entity
     public String getName()
     {
 	return this.aName;
-    }
+    } //getName()
     
     /**
      * Cherche un item dans l'inventaire de l'entite via son nom
@@ -29,7 +32,7 @@ public abstract class Entity
     public Item getItemByName( final String pItemName )
     {
 	return this.aInventory.getByName( pItemName );
-    }
+    } //getItemByName()
     
     /**
      * Verifie la presence d'un item dans l'inventaire
@@ -39,7 +42,7 @@ public abstract class Entity
     public boolean hasItem( final Item pItem )
     {
 	return this.aInventory.hasItem( pItem );
-    }
+    } //hasItem()
 
     /**
      * Verifie si l'inventaire contient au moins un item
@@ -48,7 +51,7 @@ public abstract class Entity
     public boolean hasItems()
     {
 	return (! this.aInventory.isEmpty());
-    }
+    } //hasItems()
     
     /**
      * ajoute un item a l'inventaire
@@ -57,7 +60,7 @@ public abstract class Entity
     public void addItem( final Item pItem )
     {
 	this.aInventory.add( pItem );
-    }
+    } //addItem()
 
     /**
      * ajoute des items a l'inventaire
@@ -67,7 +70,7 @@ public abstract class Entity
     public void addItem( final Item pItem, final int pNombre )
     {
 	this.aInventory.add( pItem, pNombre);
-    }
+    } //addItem()
 
     /**
      * retire un item de l'inventaire
@@ -76,7 +79,7 @@ public abstract class Entity
     public void removeItem( final Item pItem )
     {
 	this.aInventory.remove( pItem );
-    }
+    } //removeItem()
     
     /**
      * Retourne une chaine decrivant le contenu de l'inventaire
@@ -85,8 +88,8 @@ public abstract class Entity
     public String inventoryString()
     {
 	return this.aInventory.toString();
-    }
-
+    } //inventoryString()
+ 
     /**
      * retourne le poids total
      *@return le poids total
@@ -94,6 +97,6 @@ public abstract class Entity
     public int getCarriedWeight()
     {
 	return this.aInventory.totalWeight();
-    }
+    } //getCarriedWeight()
 
 }

@@ -1,11 +1,14 @@
 import java.util.StringTokenizer;
 
-
+/**
+ * classe traitant les entrees de texte
+ */
 public class Parser 
 {
 
     private CommandWords aCommandWords;  // holds all valid command words
 
+    
     /**
      * Create a new Parser.
      */
@@ -14,13 +17,15 @@ public class Parser
         this.aCommandWords = new CommandWords();
     } // Parser()
 
+    
     /**
      * Get a new command from the user. The command is read by
      * parsing the 'inputLine'.
      * @param pInputLine la String entree
      * @return une Commande
      */
-    public Command getCommand( final String pInputLine ) 
+    public Command
+	getCommand( final String pInputLine ) 
     {
         String vWord1;
         String vWord2;
@@ -46,13 +51,15 @@ public class Parser
 	return new Command( this.aCommandWords.getCommand(vWord1), vWord2 );
     } // getCommand(.)
 
+    
     /**
      * Demande la construction d'une String listant les commandes valides et la retourne.
      * @return Une string listant les commandes autorisees.
      */
-    public String getCommandList()
+    public String
+	getCommandList()
     {
 	return this.aCommandWords.makeCommandList();
-    }
+    } //getCommandList()
 
 } // Parser
