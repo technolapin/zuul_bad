@@ -1,5 +1,8 @@
 import java.util.HashMap;
 
+/**
+ * mot-commandes autorises
+ */
 public enum CommandWord
 {
     UNKNOWN("?"),
@@ -13,10 +16,15 @@ public enum CommandWord
     TAKE("take"),
     DROP("drop"),
     STONE("stone"),
+    ALEA("alea"),
     ITEMS("items");
 
     private HashMap<Language, String> aWords;
     
+    /**
+     * Constructeur de l'enum
+     * @param pWord la chaîne correspondant au mot-commande dans toutes les langues
+     */
     CommandWord(final String pWord)
     {
 	this.aWords = new HashMap<Language, String>();
@@ -25,6 +33,12 @@ public enum CommandWord
 	
     }
     
+
+    /**
+     * Constructeur de l'enum
+     * @param pWordEn la chaîne correspondant au mot-commande en anglais
+     * @param pWordFr la chaîne correspondant au mot-commande en francais
+     */
     CommandWord(final String pWordEn,
 		final String pWordFr )
     {
@@ -34,6 +48,11 @@ public enum CommandWord
 	this.aWords.put(Language.FRENCH , pWordFr);
     }
 
+    /**
+     * Retourne une des traductions du mot-commande
+     * @param pLang langage voulu
+     * @return la chaine de caractere correspondant au mot-commande dans la langue pLang
+     */
     public String toString(final Language pLang)
     {
 	return this.aWords.get(pLang);

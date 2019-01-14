@@ -1,8 +1,4 @@
-go north
-go south
-go south
-go north
-go north
+test test
 go west
 take teapot
 go south

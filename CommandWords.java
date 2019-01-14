@@ -4,6 +4,7 @@ public class CommandWords
 {
     private HashMap<String, CommandWord> aValidCommands;
 
+
     /**
      * Constructeur par defaut
      */
@@ -33,6 +34,7 @@ public class CommandWords
 	return aValidCommands.containsKey(pString);
     }
 
+    
     /**
      * Methode construisant et retournant les commandes autorisees dans une String.
      * @return Une string listant les commandes autorisees.
@@ -47,6 +49,11 @@ public class CommandWords
 	return vS;
     }
 
+    /**
+     * Donne le mot-commande correspondant a une String
+     * @param pWord String correspondant a un mot-commande
+     * @return le mot-commande correspondant
+     */
     public CommandWord getCommand(final String pWord)
     {
 	if ( this.isCommand(pWord) )

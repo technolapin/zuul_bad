@@ -1,8 +1,7 @@
 go north
-go south
-go south
+alea flower
 go north
-go north
+
 go south
 go west
 go down
@@ -1346,9 +1345,10 @@ items
 go north
 take dagger
 go north
+alea flower
 take stone
 take trouser
-test test
+go west
 take flower
 take flower
 go west

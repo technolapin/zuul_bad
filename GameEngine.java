@@ -88,7 +88,6 @@ public class GameEngine
 	Room vSpirit  = new Room ("in a strange forest. You feel observed.", vImgForest);
 
 	
-	Room vForest  = new Room ("lost in the forest.", vImgForest);
 	Room vForest1 = new Room ("lost in the forest.", vImgForest);
 	Room vForest2 = new Room ("lost in the forest.", vImgForest);
 	Room vForest3 = new Room ("lost in the forest.", vImgForest);
@@ -100,6 +99,18 @@ public class GameEngine
 	Room vShrooms = new Room ("surrounded by mushrooms. They are absolutly everywhere.", vImgShrooms);
 	Room vSquirel = new Room ("at some big tree with an hole in it.", vImgSquirel);
 	Room vFlower  = new Room ("in a warm and windy glade, covered by nice and odorant flowers of all sort.", vImgFlowers);
+
+	HashMap<String, Room> vForestNeighborhood = new HashMap<String, Room>();
+
+	vForestNeighborhood.put("forest1", vForest1);
+	vForestNeighborhood.put("forest2", vForest2);
+	vForestNeighborhood.put("forest3", vForest3);
+	vForestNeighborhood.put("faun", vFaun);
+	vForestNeighborhood.put("flower", vFlower);
+	vForestNeighborhood.put("squirel", vSquirel);
+	vForestNeighborhood.put("shrooms", vShrooms);
+	
+	Room vForest  = new TransporterRoom ("lost in the forest.", vImgForest, vForestNeighborhood);
 
 	aRooms.put("spirit", vSpirit);
 	vSpirit.setExit("north", vForest);
@@ -265,6 +276,9 @@ public class GameEngine
 		case STONE:
 		    this.stone( vCommand );
 		    break;
+		case ALEA:
+		    this.alea( vCommand );
+		    break;
 		    
 		default               :
 		    this.aGui.println ( "Looks like the dev forgot to implement that command but yet whitelisted it." );
@@ -273,6 +287,40 @@ public class GameEngine
     } // interpretCommand()
 
 
+    /**
+     * procedure appellee par la commande alea
+     * @param pCommand la commande entree
+     */
+    public void alea(final Command pCommand)
+    {
+	Room vRoom = this.aPlayer.getLocation();
+
+	if ( vRoom.getClass().equals(TransporterRoom.class ))
+	    {
+		TransporterRoom vTRoom = (TransporterRoom) vRoom;
+		if (pCommand.hasSecondWord() )
+		    {
+			String vWord = pCommand.getSecondWord();
+			if (vTRoom.doesExist(vWord) )
+			    {
+				vTRoom.setNext(vWord);
+				this.aGui.println("Destiny have been altered, you will arrive to "+vWord);
+			    }
+			else
+			    this.aGui.println("This isn't an available room");
+		    }
+		else
+		    {
+			vTRoom.setNext(null);
+			this.aGui.println("Destiny have been altered, you will arrive ... somewhere");
+		    }
+	    }
+	else
+	    this.aGui.println("You are not in a Transporter Room");
+    } //alea()
+    
+    
+    
     /**
      * procedure appellee par la commande stone
      * @param pCommand la commande entree

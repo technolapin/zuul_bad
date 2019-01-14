@@ -9,7 +9,7 @@ public class Item
     
     /**
      * le constructeur
-     * @param pDecr la description de la piece
+     * @param pDescr la description de la piece
      * @param pWei le poids de l'item
      */
     public Item( final String pDescr, final int pWei )

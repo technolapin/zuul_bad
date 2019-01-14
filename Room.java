@@ -8,7 +8,7 @@ public class Room extends Entity
     
     private HashMap<String, Room> aExits;
     private String aImageName;
-
+    public int aAccessibility;
     
     /**
      * Constructeur de Room
@@ -16,13 +16,24 @@ public class Room extends Entity
      * @param pImgName le nom de l'image.
      */
     public Room ( final String pDescription,
-		  final String pImgName)
+		  final String pImgName )
     {
 	super( pDescription );
 	this.aExits     = new HashMap<String, Room>();
 	this.aImageName = pImgName;
     } // Room
-    
+
+
+    public Room ( final String pDescription,
+		  final String pImgName,
+		  final int pAccess )
+    {
+	super( pDescription );
+	this.aExits     = new HashMap<String, Room>();
+	this.aImageName = pImgName;
+	this.aAccessibility = pAccess;
+    } // Room
+
 
     /**
      * Methode d'acces a la description de la piece
