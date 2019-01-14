@@ -4,6 +4,7 @@ import java.util.Random;
 
 /**
  * classe permettant d'obtenir des Room aléatoires
+ * @author Clément Chomicki
  */
 public class RoomRandomizer
 {

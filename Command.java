@@ -1,5 +1,6 @@
 /**
  * Classe definissant le concept de 'commandes'
+ * @author Clément Chomicki
  */
 public class Command
 {

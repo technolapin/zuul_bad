@@ -28,6 +28,7 @@ import java.awt.Color;
  * area, a text output area and an optional image.
  * 
  * @author Michael Kolling (DB edited)
+ * @author Clément Chomicki
  * @version 1.0 (Jan 2003)
  */
 public class UserInterface implements ActionListener

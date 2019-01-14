@@ -3,6 +3,7 @@ import java.util.HashMap;
 
 /**
  * Piece dont les sorties sont aleatoires
+ * @author Clément Chomicki
  */
 public class TransporterRoom extends Room
 {

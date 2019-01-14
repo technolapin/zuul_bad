@@ -8,6 +8,7 @@ import java.lang.NullPointerException;
 
 /**
  * La classe gerant le jeu.
+ * @author Clément Chomicki
  */
 public class GameEngine
 {

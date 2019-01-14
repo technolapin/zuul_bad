@@ -4,7 +4,10 @@ import java.io.IOException;
 import java.awt.image.BufferedImage;
 import javax.imageio.ImageIO;
 
-
+/**
+ * classe permettant d'acceder aux ressources du jeu
+ * @author Clément Chomicki
+ */
 public class RessourcesFetcher
 {
 

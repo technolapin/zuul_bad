@@ -1,3 +1,7 @@
+/**
+ * classe du Main
+ * @author Clément Chomicki
+ */
 public class Main
 {
     /**

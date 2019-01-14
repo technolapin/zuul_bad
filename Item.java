@@ -1,5 +1,6 @@
 /**
- * classe gerant les Items
+ * classe gerant les Items 
+ * @author Clément Chomicki
  */
 public class Item
 {

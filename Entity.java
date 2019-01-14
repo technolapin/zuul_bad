@@ -1,5 +1,6 @@
 /**
- * classe mère de Room et Player
+ * classe mere de Room et Player
+ * @author Clément Chomicki
  */
 public abstract class Entity
 {

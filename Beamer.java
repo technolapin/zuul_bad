@@ -1,5 +1,6 @@
 /**
  * Item permettant de se téléporter
+ * @author Clément Chomicki
  */
 public class Beamer extends Item
 {

@@ -2,6 +2,7 @@ import java.util.Stack;
 
 /**
  * la classe du joueur
+ * @author Clément Chomicki
  */
 public class Player extends Entity
 {

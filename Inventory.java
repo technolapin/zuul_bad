@@ -1,5 +1,9 @@
 import java.util.HashMap;
 
+/**
+ * Classe decrivant le concept d'inventaire
+ * @author Clément Chomicki
+ */
 public class Inventory
 {
     private HashMap<Item, Integer> aItems;

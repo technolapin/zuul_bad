@@ -2,6 +2,7 @@ import java.util.HashMap;
 
 /**
  * mot-commandes autorises
+ * @author Clément Chomicki
  */
 public enum CommandWord
 {

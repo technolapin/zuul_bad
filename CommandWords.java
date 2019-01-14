@@ -1,5 +1,9 @@
 import java.util.HashMap;
 
+/**
+ * classe gerant les mots-commande
+ * @author Clément Chomicki
+ */
 public class CommandWords
 {
     private HashMap<String, CommandWord> aValidCommands;

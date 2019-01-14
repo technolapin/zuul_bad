@@ -10,135 +10,136 @@
 <span class="sourceLineNo">002</span><a name="line.2"></a>
 <span class="sourceLineNo">003</span>/**<a name="line.3"></a>
 <span class="sourceLineNo">004</span> * la classe du joueur<a name="line.4"></a>
-<span class="sourceLineNo">005</span> */<a name="line.5"></a>
-<span class="sourceLineNo">006</span>public class Player extends Entity<a name="line.6"></a>
-<span class="sourceLineNo">007</span>{<a name="line.7"></a>
-<span class="sourceLineNo">008</span>    private Room        aLocation;<a name="line.8"></a>
-<span class="sourceLineNo">009</span>    private Stack&lt;Room&gt; aPreviousRooms;<a name="line.9"></a>
-<span class="sourceLineNo">010</span>    private int         aMaxWeight;<a name="line.10"></a>
-<span class="sourceLineNo">011</span><a name="line.11"></a>
-<span class="sourceLineNo">012</span>    <a name="line.12"></a>
-<span class="sourceLineNo">013</span>    /**<a name="line.13"></a>
-<span class="sourceLineNo">014</span>     * Constructeur de la classe<a name="line.14"></a>
-<span class="sourceLineNo">015</span>     * @param pN le nom de l'entite<a name="line.15"></a>
-<span class="sourceLineNo">016</span>     */<a name="line.16"></a>
-<span class="sourceLineNo">017</span>    public Player( final String pN )<a name="line.17"></a>
-<span class="sourceLineNo">018</span>    {<a name="line.18"></a>
-<span class="sourceLineNo">019</span>        super( pN );<a name="line.19"></a>
-<span class="sourceLineNo">020</span>        this.aPreviousRooms = new Stack&lt;Room&gt;();<a name="line.20"></a>
-<span class="sourceLineNo">021</span>    }<a name="line.21"></a>
-<span class="sourceLineNo">022</span><a name="line.22"></a>
-<span class="sourceLineNo">023</span>    <a name="line.23"></a>
-<span class="sourceLineNo">024</span>    /**<a name="line.24"></a>
-<span class="sourceLineNo">025</span>     * vide la stack<a name="line.25"></a>
-<span class="sourceLineNo">026</span>     */<a name="line.26"></a>
-<span class="sourceLineNo">027</span>    public void resetStack()<a name="line.27"></a>
-<span class="sourceLineNo">028</span>    {<a name="line.28"></a>
-<span class="sourceLineNo">029</span>        this.aPreviousRooms = new Stack&lt;Room&gt;();<a name="line.29"></a>
-<span class="sourceLineNo">030</span>    }<a name="line.30"></a>
-<span class="sourceLineNo">031</span><a name="line.31"></a>
+<span class="sourceLineNo">005</span> * @author Clément Chomicki<a name="line.5"></a>
+<span class="sourceLineNo">006</span> */<a name="line.6"></a>
+<span class="sourceLineNo">007</span>public class Player extends Entity<a name="line.7"></a>
+<span class="sourceLineNo">008</span>{<a name="line.8"></a>
+<span class="sourceLineNo">009</span>    private Room        aLocation;<a name="line.9"></a>
+<span class="sourceLineNo">010</span>    private Stack&lt;Room&gt; aPreviousRooms;<a name="line.10"></a>
+<span class="sourceLineNo">011</span>    private int         aMaxWeight;<a name="line.11"></a>
+<span class="sourceLineNo">012</span><a name="line.12"></a>
+<span class="sourceLineNo">013</span>    <a name="line.13"></a>
+<span class="sourceLineNo">014</span>    /**<a name="line.14"></a>
+<span class="sourceLineNo">015</span>     * Constructeur de la classe<a name="line.15"></a>
+<span class="sourceLineNo">016</span>     * @param pN le nom de l'entite<a name="line.16"></a>
+<span class="sourceLineNo">017</span>     */<a name="line.17"></a>
+<span class="sourceLineNo">018</span>    public Player( final String pN )<a name="line.18"></a>
+<span class="sourceLineNo">019</span>    {<a name="line.19"></a>
+<span class="sourceLineNo">020</span>        super( pN );<a name="line.20"></a>
+<span class="sourceLineNo">021</span>        this.aPreviousRooms = new Stack&lt;Room&gt;();<a name="line.21"></a>
+<span class="sourceLineNo">022</span>    }<a name="line.22"></a>
+<span class="sourceLineNo">023</span><a name="line.23"></a>
+<span class="sourceLineNo">024</span>    <a name="line.24"></a>
+<span class="sourceLineNo">025</span>    /**<a name="line.25"></a>
+<span class="sourceLineNo">026</span>     * vide la stack<a name="line.26"></a>
+<span class="sourceLineNo">027</span>     */<a name="line.27"></a>
+<span class="sourceLineNo">028</span>    public void resetStack()<a name="line.28"></a>
+<span class="sourceLineNo">029</span>    {<a name="line.29"></a>
+<span class="sourceLineNo">030</span>        this.aPreviousRooms = new Stack&lt;Room&gt;();<a name="line.30"></a>
+<span class="sourceLineNo">031</span>    }<a name="line.31"></a>
 <span class="sourceLineNo">032</span><a name="line.32"></a>
-<span class="sourceLineNo">033</span>    /**<a name="line.33"></a>
-<span class="sourceLineNo">034</span>     * Accesseur de aLocation<a name="line.34"></a>
-<span class="sourceLineNo">035</span>     * @return la location<a name="line.35"></a>
-<span class="sourceLineNo">036</span>     */<a name="line.36"></a>
-<span class="sourceLineNo">037</span>    public Room getLocation()<a name="line.37"></a>
-<span class="sourceLineNo">038</span>    {<a name="line.38"></a>
-<span class="sourceLineNo">039</span>        return this.aLocation;<a name="line.39"></a>
-<span class="sourceLineNo">040</span>    }<a name="line.40"></a>
-<span class="sourceLineNo">041</span><a name="line.41"></a>
-<span class="sourceLineNo">042</span>    <a name="line.42"></a>
-<span class="sourceLineNo">043</span>    /**<a name="line.43"></a>
-<span class="sourceLineNo">044</span>     * retire la derniere piece visitee de la pile et la retourne<a name="line.44"></a>
-<span class="sourceLineNo">045</span>     * @return la derniere piece visitee<a name="line.45"></a>
-<span class="sourceLineNo">046</span>     */<a name="line.46"></a>
-<span class="sourceLineNo">047</span>    public Room goToPreviousLocation()<a name="line.47"></a>
-<span class="sourceLineNo">048</span>    {<a name="line.48"></a>
-<span class="sourceLineNo">049</span>        return this.aPreviousRooms.pop();<a name="line.49"></a>
-<span class="sourceLineNo">050</span>    }<a name="line.50"></a>
-<span class="sourceLineNo">051</span><a name="line.51"></a>
-<span class="sourceLineNo">052</span>    <a name="line.52"></a>
-<span class="sourceLineNo">053</span>    /**<a name="line.53"></a>
-<span class="sourceLineNo">054</span>     * Ajoute une piece a la pile de l'historique des pieces<a name="line.54"></a>
-<span class="sourceLineNo">055</span>     * @param pNextRoom la piece a empiler sur la pile des pieces deja visitees<a name="line.55"></a>
-<span class="sourceLineNo">056</span>     */<a name="line.56"></a>
-<span class="sourceLineNo">057</span>    public void pushPreviousLocation( final Room pNextRoom )<a name="line.57"></a>
-<span class="sourceLineNo">058</span>    {<a name="line.58"></a>
-<span class="sourceLineNo">059</span>        this.aPreviousRooms.push( this.getLocation() );<a name="line.59"></a>
-<span class="sourceLineNo">060</span>    }<a name="line.60"></a>
-<span class="sourceLineNo">061</span><a name="line.61"></a>
-<span class="sourceLineNo">062</span>    <a name="line.62"></a>
-<span class="sourceLineNo">063</span>    /**<a name="line.63"></a>
-<span class="sourceLineNo">064</span>     * deplace le Joueur a un endroit donne<a name="line.64"></a>
-<span class="sourceLineNo">065</span>     * @param pNextRoom la piece où l'on deplace le joueur<a name="line.65"></a>
-<span class="sourceLineNo">066</span>     */<a name="line.66"></a>
-<span class="sourceLineNo">067</span>    public void setLocation( final Room pNextRoom )<a name="line.67"></a>
-<span class="sourceLineNo">068</span>    {<a name="line.68"></a>
-<span class="sourceLineNo">069</span>        this.aLocation = pNextRoom;<a name="line.69"></a>
-<span class="sourceLineNo">070</span>    } // setLocation()<a name="line.70"></a>
-<span class="sourceLineNo">071</span><a name="line.71"></a>
-<span class="sourceLineNo">072</span>    <a name="line.72"></a>
-<span class="sourceLineNo">073</span>    /**<a name="line.73"></a>
-<span class="sourceLineNo">074</span>     * setter de aMaxWeight<a name="line.74"></a>
-<span class="sourceLineNo">075</span>     * @param pMW nouveau poids maximal<a name="line.75"></a>
-<span class="sourceLineNo">076</span>     */<a name="line.76"></a>
-<span class="sourceLineNo">077</span>    public void setMaxWeight( final int pMW)<a name="line.77"></a>
-<span class="sourceLineNo">078</span>    {<a name="line.78"></a>
-<span class="sourceLineNo">079</span>        this.aMaxWeight = pMW;<a name="line.79"></a>
-<span class="sourceLineNo">080</span>    }<a name="line.80"></a>
-<span class="sourceLineNo">081</span><a name="line.81"></a>
-<span class="sourceLineNo">082</span>    <a name="line.82"></a>
-<span class="sourceLineNo">083</span>    /**<a name="line.83"></a>
-<span class="sourceLineNo">084</span>     * accesseur de aMaxWeight<a name="line.84"></a>
-<span class="sourceLineNo">085</span>     * @return le poids maximal<a name="line.85"></a>
-<span class="sourceLineNo">086</span>     */<a name="line.86"></a>
-<span class="sourceLineNo">087</span>    public int getMaxWeight()<a name="line.87"></a>
-<span class="sourceLineNo">088</span>    {<a name="line.88"></a>
-<span class="sourceLineNo">089</span>        return this.aMaxWeight;<a name="line.89"></a>
-<span class="sourceLineNo">090</span>    }<a name="line.90"></a>
-<span class="sourceLineNo">091</span><a name="line.91"></a>
-<span class="sourceLineNo">092</span>    <a name="line.92"></a>
-<span class="sourceLineNo">093</span>    /**<a name="line.93"></a>
-<span class="sourceLineNo">094</span>     * teste si la pile est vide<a name="line.94"></a>
-<span class="sourceLineNo">095</span>     * @return un booleen<a name="line.95"></a>
-<span class="sourceLineNo">096</span>     */<a name="line.96"></a>
-<span class="sourceLineNo">097</span>    public boolean hasNoPreviousLocations()<a name="line.97"></a>
-<span class="sourceLineNo">098</span>    {<a name="line.98"></a>
-<span class="sourceLineNo">099</span>        return this.aPreviousRooms.isEmpty();<a name="line.99"></a>
-<span class="sourceLineNo">100</span>    }<a name="line.100"></a>
-<span class="sourceLineNo">101</span><a name="line.101"></a>
-<span class="sourceLineNo">102</span>    <a name="line.102"></a>
-<span class="sourceLineNo">103</span>    /**<a name="line.103"></a>
-<span class="sourceLineNo">104</span>     * Cree la description de l'inventaire du joueur<a name="line.104"></a>
-<span class="sourceLineNo">105</span>     * @return la description de l'inventaire du joueur<a name="line.105"></a>
-<span class="sourceLineNo">106</span>     */<a name="line.106"></a>
-<span class="sourceLineNo">107</span>    public String makeItemsDescription()<a name="line.107"></a>
-<span class="sourceLineNo">108</span>    {<a name="line.108"></a>
-<span class="sourceLineNo">109</span>        String vS = super.inventoryString();<a name="line.109"></a>
-<span class="sourceLineNo">110</span>        if (vS.equals(""))<a name="line.110"></a>
-<span class="sourceLineNo">111</span>            return "You own nothing.\nTotal: 0 / "+this.getMaxWeight();<a name="line.111"></a>
-<span class="sourceLineNo">112</span>        else<a name="line.112"></a>
-<span class="sourceLineNo">113</span>            return (<a name="line.113"></a>
-<span class="sourceLineNo">114</span>                    "You have " + vS + "\nTotal: " +<a name="line.114"></a>
-<span class="sourceLineNo">115</span>                    super.getCarriedWeight() +<a name="line.115"></a>
-<span class="sourceLineNo">116</span>                    " / " + this.getMaxWeight()<a name="line.116"></a>
-<span class="sourceLineNo">117</span>                    );<a name="line.117"></a>
-<span class="sourceLineNo">118</span>    }<a name="line.118"></a>
-<span class="sourceLineNo">119</span><a name="line.119"></a>
-<span class="sourceLineNo">120</span>    <a name="line.120"></a>
-<span class="sourceLineNo">121</span>    /**<a name="line.121"></a>
-<span class="sourceLineNo">122</span>     * determine si un item peut etre porte en fonction de son poids<a name="line.122"></a>
-<span class="sourceLineNo">123</span>     * @param pItem un Item<a name="line.123"></a>
-<span class="sourceLineNo">124</span>     * @return true si l'item est assez leger pour etre porte<a name="line.124"></a>
-<span class="sourceLineNo">125</span>     */<a name="line.125"></a>
-<span class="sourceLineNo">126</span>    public boolean canCarryItem( final Item pItem )<a name="line.126"></a>
-<span class="sourceLineNo">127</span>    {<a name="line.127"></a>
-<span class="sourceLineNo">128</span>        return super.getCarriedWeight() + pItem.getWeight() &lt;= this.getMaxWeight();<a name="line.128"></a>
-<span class="sourceLineNo">129</span>    }<a name="line.129"></a>
-<span class="sourceLineNo">130</span><a name="line.130"></a>
+<span class="sourceLineNo">033</span><a name="line.33"></a>
+<span class="sourceLineNo">034</span>    /**<a name="line.34"></a>
+<span class="sourceLineNo">035</span>     * Accesseur de aLocation<a name="line.35"></a>
+<span class="sourceLineNo">036</span>     * @return la location<a name="line.36"></a>
+<span class="sourceLineNo">037</span>     */<a name="line.37"></a>
+<span class="sourceLineNo">038</span>    public Room getLocation()<a name="line.38"></a>
+<span class="sourceLineNo">039</span>    {<a name="line.39"></a>
+<span class="sourceLineNo">040</span>        return this.aLocation;<a name="line.40"></a>
+<span class="sourceLineNo">041</span>    }<a name="line.41"></a>
+<span class="sourceLineNo">042</span><a name="line.42"></a>
+<span class="sourceLineNo">043</span>    <a name="line.43"></a>
+<span class="sourceLineNo">044</span>    /**<a name="line.44"></a>
+<span class="sourceLineNo">045</span>     * retire la derniere piece visitee de la pile et la retourne<a name="line.45"></a>
+<span class="sourceLineNo">046</span>     * @return la derniere piece visitee<a name="line.46"></a>
+<span class="sourceLineNo">047</span>     */<a name="line.47"></a>
+<span class="sourceLineNo">048</span>    public Room goToPreviousLocation()<a name="line.48"></a>
+<span class="sourceLineNo">049</span>    {<a name="line.49"></a>
+<span class="sourceLineNo">050</span>        return this.aPreviousRooms.pop();<a name="line.50"></a>
+<span class="sourceLineNo">051</span>    }<a name="line.51"></a>
+<span class="sourceLineNo">052</span><a name="line.52"></a>
+<span class="sourceLineNo">053</span>    <a name="line.53"></a>
+<span class="sourceLineNo">054</span>    /**<a name="line.54"></a>
+<span class="sourceLineNo">055</span>     * Ajoute une piece a la pile de l'historique des pieces<a name="line.55"></a>
+<span class="sourceLineNo">056</span>     * @param pNextRoom la piece a empiler sur la pile des pieces deja visitees<a name="line.56"></a>
+<span class="sourceLineNo">057</span>     */<a name="line.57"></a>
+<span class="sourceLineNo">058</span>    public void pushPreviousLocation( final Room pNextRoom )<a name="line.58"></a>
+<span class="sourceLineNo">059</span>    {<a name="line.59"></a>
+<span class="sourceLineNo">060</span>        this.aPreviousRooms.push( this.getLocation() );<a name="line.60"></a>
+<span class="sourceLineNo">061</span>    }<a name="line.61"></a>
+<span class="sourceLineNo">062</span><a name="line.62"></a>
+<span class="sourceLineNo">063</span>    <a name="line.63"></a>
+<span class="sourceLineNo">064</span>    /**<a name="line.64"></a>
+<span class="sourceLineNo">065</span>     * deplace le Joueur a un endroit donne<a name="line.65"></a>
+<span class="sourceLineNo">066</span>     * @param pNextRoom la piece où l'on deplace le joueur<a name="line.66"></a>
+<span class="sourceLineNo">067</span>     */<a name="line.67"></a>
+<span class="sourceLineNo">068</span>    public void setLocation( final Room pNextRoom )<a name="line.68"></a>
+<span class="sourceLineNo">069</span>    {<a name="line.69"></a>
+<span class="sourceLineNo">070</span>        this.aLocation = pNextRoom;<a name="line.70"></a>
+<span class="sourceLineNo">071</span>    } // setLocation()<a name="line.71"></a>
+<span class="sourceLineNo">072</span><a name="line.72"></a>
+<span class="sourceLineNo">073</span>    <a name="line.73"></a>
+<span class="sourceLineNo">074</span>    /**<a name="line.74"></a>
+<span class="sourceLineNo">075</span>     * setter de aMaxWeight<a name="line.75"></a>
+<span class="sourceLineNo">076</span>     * @param pMW nouveau poids maximal<a name="line.76"></a>
+<span class="sourceLineNo">077</span>     */<a name="line.77"></a>
+<span class="sourceLineNo">078</span>    public void setMaxWeight( final int pMW)<a name="line.78"></a>
+<span class="sourceLineNo">079</span>    {<a name="line.79"></a>
+<span class="sourceLineNo">080</span>        this.aMaxWeight = pMW;<a name="line.80"></a>
+<span class="sourceLineNo">081</span>    }<a name="line.81"></a>
+<span class="sourceLineNo">082</span><a name="line.82"></a>
+<span class="sourceLineNo">083</span>    <a name="line.83"></a>
+<span class="sourceLineNo">084</span>    /**<a name="line.84"></a>
+<span class="sourceLineNo">085</span>     * accesseur de aMaxWeight<a name="line.85"></a>
+<span class="sourceLineNo">086</span>     * @return le poids maximal<a name="line.86"></a>
+<span class="sourceLineNo">087</span>     */<a name="line.87"></a>
+<span class="sourceLineNo">088</span>    public int getMaxWeight()<a name="line.88"></a>
+<span class="sourceLineNo">089</span>    {<a name="line.89"></a>
+<span class="sourceLineNo">090</span>        return this.aMaxWeight;<a name="line.90"></a>
+<span class="sourceLineNo">091</span>    }<a name="line.91"></a>
+<span class="sourceLineNo">092</span><a name="line.92"></a>
+<span class="sourceLineNo">093</span>    <a name="line.93"></a>
+<span class="sourceLineNo">094</span>    /**<a name="line.94"></a>
+<span class="sourceLineNo">095</span>     * teste si la pile est vide<a name="line.95"></a>
+<span class="sourceLineNo">096</span>     * @return un booleen<a name="line.96"></a>
+<span class="sourceLineNo">097</span>     */<a name="line.97"></a>
+<span class="sourceLineNo">098</span>    public boolean hasNoPreviousLocations()<a name="line.98"></a>
+<span class="sourceLineNo">099</span>    {<a name="line.99"></a>
+<span class="sourceLineNo">100</span>        return this.aPreviousRooms.isEmpty();<a name="line.100"></a>
+<span class="sourceLineNo">101</span>    }<a name="line.101"></a>
+<span class="sourceLineNo">102</span><a name="line.102"></a>
+<span class="sourceLineNo">103</span>    <a name="line.103"></a>
+<span class="sourceLineNo">104</span>    /**<a name="line.104"></a>
+<span class="sourceLineNo">105</span>     * Cree la description de l'inventaire du joueur<a name="line.105"></a>
+<span class="sourceLineNo">106</span>     * @return la description de l'inventaire du joueur<a name="line.106"></a>
+<span class="sourceLineNo">107</span>     */<a name="line.107"></a>
+<span class="sourceLineNo">108</span>    public String makeItemsDescription()<a name="line.108"></a>
+<span class="sourceLineNo">109</span>    {<a name="line.109"></a>
+<span class="sourceLineNo">110</span>        String vS = super.inventoryString();<a name="line.110"></a>
+<span class="sourceLineNo">111</span>        if (vS.equals(""))<a name="line.111"></a>
+<span class="sourceLineNo">112</span>            return "You own nothing.\nTotal: 0 / "+this.getMaxWeight();<a name="line.112"></a>
+<span class="sourceLineNo">113</span>        else<a name="line.113"></a>
+<span class="sourceLineNo">114</span>            return (<a name="line.114"></a>
+<span class="sourceLineNo">115</span>                    "You have " + vS + "\nTotal: " +<a name="line.115"></a>
+<span class="sourceLineNo">116</span>                    super.getCarriedWeight() +<a name="line.116"></a>
+<span class="sourceLineNo">117</span>                    " / " + this.getMaxWeight()<a name="line.117"></a>
+<span class="sourceLineNo">118</span>                    );<a name="line.118"></a>
+<span class="sourceLineNo">119</span>    }<a name="line.119"></a>
+<span class="sourceLineNo">120</span><a name="line.120"></a>
+<span class="sourceLineNo">121</span>    <a name="line.121"></a>
+<span class="sourceLineNo">122</span>    /**<a name="line.122"></a>
+<span class="sourceLineNo">123</span>     * determine si un item peut etre porte en fonction de son poids<a name="line.123"></a>
+<span class="sourceLineNo">124</span>     * @param pItem un Item<a name="line.124"></a>
+<span class="sourceLineNo">125</span>     * @return true si l'item est assez leger pour etre porte<a name="line.125"></a>
+<span class="sourceLineNo">126</span>     */<a name="line.126"></a>
+<span class="sourceLineNo">127</span>    public boolean canCarryItem( final Item pItem )<a name="line.127"></a>
+<span class="sourceLineNo">128</span>    {<a name="line.128"></a>
+<span class="sourceLineNo">129</span>        return super.getCarriedWeight() + pItem.getWeight() &lt;= this.getMaxWeight();<a name="line.129"></a>
+<span class="sourceLineNo">130</span>    }<a name="line.130"></a>
 <span class="sourceLineNo">131</span><a name="line.131"></a>
-<span class="sourceLineNo">132</span>    <a name="line.132"></a>
-<span class="sourceLineNo">133</span>}<a name="line.133"></a>
+<span class="sourceLineNo">132</span><a name="line.132"></a>
+<span class="sourceLineNo">133</span>    <a name="line.133"></a>
+<span class="sourceLineNo">134</span>}<a name="line.134"></a>
 
 
 
